@@ -51,6 +51,13 @@ export default {
       boxShadow: {
         soft: "var(--shadow-soft)",
         elevated: "var(--shadow-elevated)",
+        "glow-violet": "var(--shadow-glow-violet)",
+        "glow-gold": "var(--shadow-glow-gold)",
+      },
+      backgroundImage: {
+        "gradient-violet": "var(--gradient-violet)",
+        "gradient-gold": "var(--gradient-gold)",
+        "gradient-dark": "var(--gradient-dark)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,12 +81,36 @@ export default {
           from: { transform: "translateX(-100%)" },
           to: { transform: "translateX(0)" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "1", filter: "brightness(1)" },
+          "50%": { opacity: "0.8", filter: "brightness(1.2)" },
+        },
+        "slide-up": {
+          from: { opacity: "0", transform: "translateY(100px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "text-shimmer": {
+          from: { backgroundPosition: "0% center" },
+          to: { backgroundPosition: "200% center" },
+        },
+        "border-beam": {
+          "0%": { "offset-distance": "0%" },
+          "100%": { "offset-distance": "100%" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.6s ease-out",
         "fade-in-up": "fade-in-up 0.8s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
         "slide-in": "slide-in 0.5s ease-out",
+        "slide-up": "slide-up 1s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "text-shimmer": "text-shimmer 3s linear infinite",
       },
     },
   },
