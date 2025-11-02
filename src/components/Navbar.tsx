@@ -61,9 +61,11 @@ const Navbar = () => {
                   key={item.path}
                   to={item.path}
                   className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg relative group ${
-                    location.pathname === item.path 
-                      ? "text-primary" 
-                      : "text-muted-foreground hover:text-foreground"
+                    item.path === "/contact"
+                      ? "text-primary bg-gradient-to-r from-primary/10 to-secondary/10 shadow-glow-gold"
+                      : location.pathname === item.path 
+                        ? "text-primary" 
+                        : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {item.label}
@@ -73,31 +75,6 @@ const Navbar = () => {
                   <div className="absolute inset-0 bg-primary/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               ))}
-            </div>
-
-            {/* Desktop CTAs */}
-            <div className="hidden md:flex items-center gap-3">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                asChild 
-                className="relative overflow-hidden group"
-              >
-                <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                  <span className="relative z-10">Book Intro Call</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </Button>
-              <Button 
-                size="sm" 
-                asChild 
-                className="relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:shadow-glow-gold transition-all duration-300"
-              >
-                <Link to="/contact">
-                  <span className="relative z-10">Request Audit</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-secondary/80 opacity-0 hover:opacity-100 transition-opacity" />
-                </Link>
-              </Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -120,24 +97,16 @@ const Navbar = () => {
                     to={item.path}
                     onClick={() => setIsOpen(false)}
                     className={`px-4 py-3 text-sm font-medium transition-all rounded-lg ${
-                      location.pathname === item.path 
-                        ? "text-primary bg-primary/10" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      item.path === "/contact"
+                        ? "text-primary bg-gradient-to-r from-primary/10 to-secondary/10 shadow-glow-gold"
+                        : location.pathname === item.path 
+                          ? "text-primary bg-primary/10" 
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     }`}
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-border/50">
-                  <Button variant="ghost" size="sm" asChild>
-                    <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                      Book Intro Call
-                    </a>
-                  </Button>
-                  <Button size="sm" asChild>
-                    <Link to="/contact">Request Audit</Link>
-                  </Button>
-                </div>
               </div>
             </div>
           )}
