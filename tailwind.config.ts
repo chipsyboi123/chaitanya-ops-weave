@@ -57,7 +57,7 @@ export default {
       backgroundImage: {
         "gradient-violet": "var(--gradient-violet)",
         "gradient-gold": "var(--gradient-gold)",
-        "gradient-dark": "var(--gradient-dark)",
+        "gradient-light": "var(--gradient-light)",
       },
       borderRadius: {
         lg: "var(--radius)",

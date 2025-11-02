@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   return (
-    <footer className="relative border-t border-border/50 bg-gradient-dark overflow-hidden">
+    <footer className="relative border-t border-border/50 bg-gradient-light overflow-hidden">
       {/* Glow effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 lg:px-8 py-16 lg:py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">

@@ -8,49 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Awwwards-style ultra-dark fintech aesthetic */
-    --background: 225 20% 4%;
-    --foreground: 0 0% 98%;
+    /* Awwwards-style light fintech aesthetic */
+    --background: 0 0% 100%;
+    --foreground: 225 20% 10%;
 
-    --card: 225 15% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 225 20% 10%;
 
-    --popover: 225 15% 8%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 225 20% 10%;
 
     /* Gold accent for CTAs */
-    --primary: 45 52% 59%;
-    --primary-foreground: 225 20% 4%;
+    --primary: 45 52% 55%;
+    --primary-foreground: 0 0% 100%;
 
     /* Electric violet */
-    --secondary: 260 100% 65%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 260 100% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 225 12% 15%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 225 12% 95%;
+    --muted-foreground: 220 10% 40%;
 
-    --accent: 260 100% 65%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 260 100% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 12%;
-    --input: 225 15% 12%;
-    --ring: 260 100% 65%;
+    --border: 225 15% 90%;
+    --input: 225 15% 90%;
+    --ring: 260 100% 60%;
 
     --radius: 1rem;
 
     /* Advanced effects */
-    --shadow-soft: 0 4px 24px -4px hsl(225 20% 2% / 0.6);
-    --shadow-elevated: 0 20px 60px -10px hsl(225 20% 2% / 0.8);
-    --shadow-glow-violet: 0 0 40px hsl(260 100% 65% / 0.3);
-    --shadow-glow-gold: 0 0 40px hsl(45 52% 59% / 0.25);
+    --shadow-soft: 0 4px 24px -4px hsl(225 20% 20% / 0.1);
+    --shadow-elevated: 0 20px 60px -10px hsl(225 20% 20% / 0.15);
+    --shadow-glow-violet: 0 0 40px hsl(260 100% 60% / 0.15);
+    --shadow-glow-gold: 0 0 40px hsl(45 52% 55% / 0.15);
     
     /* Gradients */
-    --gradient-violet: linear-gradient(135deg, hsl(260 100% 65% / 0.2), hsl(280 100% 70% / 0.1));
-    --gradient-gold: linear-gradient(135deg, hsl(45 52% 59% / 0.15), hsl(35 60% 65% / 0.05));
-    --gradient-dark: linear-gradient(180deg, hsl(225 20% 4%), hsl(225 20% 6%));
+    --gradient-violet: linear-gradient(135deg, hsl(260 100% 60% / 0.08), hsl(280 100% 70% / 0.04));
+    --gradient-gold: linear-gradient(135deg, hsl(45 52% 55% / 0.08), hsl(35 60% 65% / 0.04));
+    --gradient-light: linear-gradient(180deg, hsl(0 0% 100%), hsl(225 20% 98%));
     
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -79,9 +79,9 @@ All colors MUST be HSL.
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, hsl(260 100% 65% / 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, hsl(45 52% 59% / 0.06) 0%, transparent 50%),
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      radial-gradient(circle at 20% 50%, hsl(260 100% 60% / 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(45 52% 55% / 0.03) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.01'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
   }
@@ -93,7 +93,7 @@ All colors MUST be HSL.
 
   h1 {
     @apply text-6xl md:text-8xl lg:text-9xl;
-    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--secondary)) 100%);
+    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--secondary)) 80%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
