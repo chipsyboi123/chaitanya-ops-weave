@@ -12,8 +12,8 @@ import abstractNetwork from "@/assets/abstract-network.jpg";
 const Home = () => {
   return (
     <div className="min-h-screen relative">
-      {/* Hero Section with Background Image */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+      {/* Hero Section - starts below navbar */}
+      <section className="relative min-h-[70vh] flex items-center justify-center mt-20 overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -22,11 +22,11 @@ const Home = () => {
             className="w-full h-full object-cover object-center"
             loading="eager"
           />
-          {/* Subtle dark overlay like reference - image clearly visible */}
-          <div className="absolute inset-0 bg-black/40" />
+          {/* Stronger overlay for text readability */}
+          <div className="absolute inset-0 bg-black/55" />
         </div>
         
-        <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative">
+        <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative py-16">
           <h1 className="mb-8 opacity-0 animate-fade-in text-white drop-shadow-lg" style={{ animationDelay: "0.1s" }}>
             Precision Systems for<br />Modern Wealth Firms
           </h1>
