@@ -4,12 +4,29 @@ import { Card } from "@/components/ui/card";
 import SectionContainer from "@/components/SectionContainer";
 import { ArrowRight, Brain, LineChart, Settings, TrendingUp, Clock, Shield } from "lucide-react";
 
+// Import images
+import heroArchitecture from "@/assets/hero-architecture.jpg";
+import cityscapeEditorial from "@/assets/cityscape-editorial.jpg";
+import abstractNetwork from "@/assets/abstract-network.jpg";
+
 const Home = () => {
   return (
     <div className="min-h-screen relative">
-      {/* Hero Section - Quiet power, no animations */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16">
-        <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl">
+      {/* Hero Section with Background Image */}
+      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={heroArchitecture} 
+            alt="Modern architectural glass facade" 
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+          />
+          {/* Gradient Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background" />
+        </div>
+        
+        <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative">
           <h1 className="mb-8 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
             Precision Systems for<br />Modern Wealth Firms
           </h1>
@@ -82,62 +99,99 @@ const Home = () => {
         </Card>
       </SectionContainer>
 
-      {/* Capabilities Overview - 3 Pillars */}
-      <SectionContainer>
-        <h2 className="text-center mb-4">Capabilities</h2>
-        <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
-          Three pillars of transformation for modern wealth practices
-        </p>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Brain,
-              title: "AI Systems & Automation",
-              description: "RAG knowledge bases, workflow automation, RM copilots, query-tracking bots, automated client notes."
-            },
-            {
-              icon: LineChart,
-              title: "Research & Portfolio Intelligence",
-              description: "Quant frameworks, multi-asset allocation systems, fund analytics, risk dashboards, derivative overlays."
-            },
-            {
-              icon: Settings,
-              title: "Operations & Client Experience",
-              description: "CRM design, process automation, onboarding pipelines, communication standards, bespoke client reporting."
-            }
-          ].map((item, i) => (
-            <Card 
-              key={i}
-              className="p-8 bg-card border border-border/50 hover:border-primary/30 transition-all duration-500 group"
-            >
-              <div className="mb-6 inline-flex p-3 border border-primary/20 rounded-lg group-hover:border-primary/40 transition-colors">
-                <item.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-            </Card>
-          ))}
+      {/* Capabilities Overview with Abstract Network Background */}
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={abstractNetwork} 
+            alt="Abstract data network visualization" 
+            className="w-full h-full object-cover opacity-10"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
         </div>
-      </SectionContainer>
-
-      {/* Editorial Section - Why Modern Wealth Requires Modern Systems */}
-      <SectionContainer className="section-gradient">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="mb-8 font-serif">Why Modern Wealth Requires Modern Systems</h2>
-          <div className="space-y-6 text-muted-foreground leading-relaxed">
-            <p>
-              Client expectations have fundamentally shifted. Today's HNI and UHNI families demand clarity, speed, and proactive intelligence from their advisors—not just portfolio performance.
-            </p>
-            <p>
-              Compliance pressure continues to mount. Regulatory complexity requires systems that can track, document, and report with institutional precision.
-            </p>
-            <p>
-              The advisor of 2025 must be data-driven, operationally excellent, and deeply organized. Technology is leverage, not replacement—it amplifies the advisor's judgment and deepens client relationships.
-            </p>
+        
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <h2 className="text-center mb-4">Capabilities</h2>
+          <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+            Three pillars of transformation for modern wealth practices
+          </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Brain,
+                title: "AI Systems & Automation",
+                description: "RAG knowledge bases, workflow automation, RM copilots, query-tracking bots, automated client notes."
+              },
+              {
+                icon: LineChart,
+                title: "Research & Portfolio Intelligence",
+                description: "Quant frameworks, multi-asset allocation systems, fund analytics, risk dashboards, derivative overlays."
+              },
+              {
+                icon: Settings,
+                title: "Operations & Client Experience",
+                description: "CRM design, process automation, onboarding pipelines, communication standards, bespoke client reporting."
+              }
+            ].map((item, i) => (
+              <Card 
+                key={i}
+                className="p-8 bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 group"
+              >
+                <div className="mb-6 inline-flex p-3 border border-primary/20 rounded-lg group-hover:border-primary/40 transition-colors">
+                  <item.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+              </Card>
+            ))}
           </div>
         </div>
-      </SectionContainer>
+      </section>
+
+      {/* Image Divider Strip */}
+      <div className="relative h-32 overflow-hidden">
+        <img 
+          src={cityscapeEditorial} 
+          alt="City skyline at dusk" 
+          className="w-full h-full object-cover object-center grayscale opacity-30"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
+      </div>
+
+      {/* Editorial Section - Why Modern Wealth Requires Modern Systems */}
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        {/* Subtle Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={cityscapeEditorial} 
+            alt="Financial district cityscape" 
+            className="w-full h-full object-cover opacity-[0.08] grayscale"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
+        </div>
+        
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="mb-8 font-serif">Why Modern Wealth Requires Modern Systems</h2>
+            <div className="space-y-6 text-muted-foreground leading-relaxed">
+              <p>
+                Client expectations have fundamentally shifted. Today's HNI and UHNI families demand clarity, speed, and proactive intelligence from their advisors—not just portfolio performance.
+              </p>
+              <p>
+                Compliance pressure continues to mount. Regulatory complexity requires systems that can track, document, and report with institutional precision.
+              </p>
+              <p>
+                The advisor of 2025 must be data-driven, operationally excellent, and deeply organized. Technology is leverage, not replacement—it amplifies the advisor's judgment and deepens client relationships.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Impact Examples */}
       <SectionContainer>
