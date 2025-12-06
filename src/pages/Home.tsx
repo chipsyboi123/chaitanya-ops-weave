@@ -5,7 +5,7 @@ import SectionContainer from "@/components/SectionContainer";
 import { ArrowRight, Brain, LineChart, Settings, TrendingUp, Clock, Shield } from "lucide-react";
 
 // Import images
-import heroArchitecture from "@/assets/hero-architecture.jpg";
+import heroCitySkyline from "@/assets/hero-city-skyline.jpg";
 import cityscapeEditorial from "@/assets/cityscape-editorial.jpg";
 import abstractNetwork from "@/assets/abstract-network.jpg";
 
@@ -17,13 +17,13 @@ const Home = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src={heroArchitecture} 
-            alt="Modern architectural glass facade" 
+            src={heroCitySkyline} 
+            alt="New York City skyline aerial view" 
             className="w-full h-full object-cover object-center"
             loading="eager"
           />
-          {/* Gradient Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background" />
+          {/* Gradient Overlay - balanced for image visibility + text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/90" />
         </div>
         
         <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative">
