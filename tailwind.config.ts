@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         serif: ['IBM Plex Serif', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
