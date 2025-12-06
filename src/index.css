@@ -1,60 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Premium WealthTech Design System - BlackRock × McKinsey aesthetic */
 
 @layer base {
   :root {
-    /* Awwwards-style light fintech aesthetic */
-    --background: 0 0% 100%;
-    --foreground: 225 20% 10%;
+    /* Deep Navy & Carbon palette */
+    --background: 220 20% 7%;
+    --foreground: 45 10% 92%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 225 20% 10%;
+    --card: 220 18% 10%;
+    --card-foreground: 45 10% 92%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 225 20% 10%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 45 10% 92%;
 
-    /* Gold accent for CTAs */
-    --primary: 45 52% 55%;
-    --primary-foreground: 0 0% 100%;
+    /* Champagne Gold accent */
+    --primary: 42 28% 72%;
+    --primary-foreground: 220 20% 7%;
 
-    /* Electric violet */
-    --secondary: 260 100% 60%;
-    --secondary-foreground: 0 0% 100%;
+    /* Muted Platinum */
+    --secondary: 45 8% 88%;
+    --secondary-foreground: 220 20% 7%;
 
-    --muted: 225 12% 95%;
-    --muted-foreground: 220 10% 40%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 260 100% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 42 28% 72%;
+    --accent-foreground: 220 20% 7%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 90%;
-    --input: 225 15% 90%;
-    --ring: 260 100% 60%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 42 28% 72%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    /* Advanced effects */
-    --shadow-soft: 0 4px 24px -4px hsl(225 20% 20% / 0.1);
-    --shadow-elevated: 0 20px 60px -10px hsl(225 20% 20% / 0.15);
-    --shadow-glow-violet: 0 0 40px hsl(260 100% 60% / 0.15);
-    --shadow-glow-gold: 0 0 40px hsl(45 52% 55% / 0.15);
+    /* Refined shadows */
+    --shadow-soft: 0 4px 24px -4px hsl(220 20% 5% / 0.3);
+    --shadow-elevated: 0 20px 60px -10px hsl(220 20% 5% / 0.5);
+    --shadow-glow-gold: 0 0 40px hsl(42 28% 72% / 0.12);
+    --shadow-glow-platinum: 0 0 40px hsl(45 8% 88% / 0.08);
     
-    /* Gradients */
-    --gradient-violet: linear-gradient(135deg, hsl(260 100% 60% / 0.08), hsl(280 100% 70% / 0.04));
-    --gradient-gold: linear-gradient(135deg, hsl(45 52% 55% / 0.08), hsl(35 60% 65% / 0.04));
-    --gradient-light: linear-gradient(180deg, hsl(0 0% 100%), hsl(225 20% 98%));
+    /* Subtle gradients */
+    --gradient-dark: linear-gradient(180deg, hsl(220 20% 7%), hsl(220 18% 5%));
+    --gradient-card: linear-gradient(135deg, hsl(220 18% 12%), hsl(220 18% 8%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 28% 72% / 0.1), hsl(42 28% 72% / 0.02));
     
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -71,6 +70,7 @@ All colors MUST be HSL.
     overflow-x: hidden;
   }
 
+  /* Subtle geometric texture background */
   body::before {
     content: '';
     position: fixed;
@@ -79,32 +79,87 @@ All colors MUST be HSL.
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, hsl(260 100% 60% / 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, hsl(45 52% 55% / 0.03) 0%, transparent 50%),
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.01'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      radial-gradient(circle at 20% 20%, hsl(42 28% 72% / 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(42 28% 72% / 0.01) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
-    line-height: 1.1;
+    @apply font-semibold tracking-tight;
+    line-height: 1.15;
   }
 
+  /* Editorial serif for hero headings */
   h1 {
-    @apply text-6xl md:text-8xl lg:text-9xl;
-    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--secondary)) 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @apply text-4xl md:text-6xl lg:text-7xl;
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   h2 {
-    @apply text-4xl md:text-6xl lg:text-7xl;
+    @apply text-3xl md:text-4xl lg:text-5xl;
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 
   h3 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
+    @apply text-xl md:text-2xl lg:text-3xl;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  h4 {
+    @apply text-lg md:text-xl;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Refined paragraph styling */
+  p {
+    @apply leading-relaxed;
+  }
+
+  /* Gold accent underline for editorial links */
+  .editorial-link {
+    @apply relative inline-block;
+  }
+  
+  .editorial-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 origin-right transition-transform duration-300;
+  }
+  
+  .editorial-link:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+
+  /* Champagne gold rule */
+  .gold-rule {
+    @apply h-px bg-gradient-to-r from-transparent via-primary to-transparent;
   }
 }
 
+/* Premium button overrides */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300;
+    @apply border border-primary/20;
+  }
+
+  .btn-outline {
+    @apply border border-primary/30 text-primary hover:bg-primary/10 transition-all duration-300;
+  }
+
+  /* Card with subtle gold border on hover */
+  .card-premium {
+    @apply bg-card border border-border/50 transition-all duration-500;
+  }
+
+  .card-premium:hover {
+    @apply border-primary/30 shadow-glow-gold;
+  }
+}
