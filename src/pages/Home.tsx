@@ -22,16 +22,16 @@ const Home = () => {
             className="w-full h-full object-cover object-center"
             loading="eager"
           />
-          {/* Gradient Overlay - balanced for image visibility + text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/90" />
+          {/* Subtle dark overlay like reference - image clearly visible */}
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         
         <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative">
-          <h1 className="mb-8 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <h1 className="mb-8 opacity-0 animate-fade-in text-white drop-shadow-lg" style={{ animationDelay: "0.1s" }}>
             Precision Systems for<br />Modern Wealth Firms
           </h1>
           
-          <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 opacity-0 animate-fade-in font-light leading-relaxed" style={{ animationDelay: "0.2s" }}>
+          <p className="text-lg lg:text-xl text-white/90 max-w-3xl mx-auto mb-12 opacity-0 animate-fade-in font-light leading-relaxed drop-shadow-md" style={{ animationDelay: "0.2s" }}>
             AI-enabled operations, research intelligence, and institutional-grade workflows for teams that manage meaningful wealth.
           </p>
           
@@ -39,7 +39,7 @@ const Home = () => {
             <Button 
               size="lg" 
               asChild 
-              className="text-base px-8 py-6 bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300"
+              className="text-base px-8 py-6 bg-white/90 text-secondary hover:bg-white transition-all duration-300"
             >
               <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
                 Book Consultation
@@ -49,7 +49,7 @@ const Home = () => {
               size="lg" 
               variant="outline" 
               asChild 
-              className="text-base px-8 py-6 border border-secondary/30 text-secondary hover:bg-secondary/5 transition-all duration-300"
+              className="text-base px-8 py-6 border border-white/50 text-white hover:bg-white/10 transition-all duration-300"
             >
               <Link to="/services">
                 See Capabilities
