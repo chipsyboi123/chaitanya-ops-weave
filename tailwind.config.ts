@@ -56,12 +56,14 @@ export default {
         soft: "var(--shadow-soft)",
         elevated: "var(--shadow-elevated)",
         "glow-gold": "var(--shadow-glow-gold)",
-        "glow-platinum": "var(--shadow-glow-platinum)",
+        "glow-violet": "var(--shadow-glow-violet)",
       },
       backgroundImage: {
-        "gradient-dark": "var(--gradient-dark)",
+        "gradient-cream": "var(--gradient-cream)",
         "gradient-card": "var(--gradient-card)",
-        "gradient-gold": "var(--gradient-gold)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-accent": "var(--gradient-accent)",
+        "gradient-subtle": "var(--gradient-subtle)",
       },
       borderRadius: {
         lg: "var(--radius)",

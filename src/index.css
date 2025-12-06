@@ -4,53 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium WealthTech Design System - BlackRock × McKinsey aesthetic */
+/* Premium WealthTech Design System - Light Cream + Editorial Luxury */
 
 @layer base {
   :root {
-    /* Deep Navy & Carbon palette */
-    --background: 220 20% 7%;
-    --foreground: 45 10% 92%;
+    /* Soft Cream & Warm palette */
+    --background: 40 30% 97%;
+    --foreground: 220 25% 10%;
 
-    --card: 220 18% 10%;
-    --card-foreground: 45 10% 92%;
+    --card: 40 25% 99%;
+    --card-foreground: 220 25% 10%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 45 10% 92%;
+    --popover: 40 25% 99%;
+    --popover-foreground: 220 25% 10%;
 
-    /* Champagne Gold accent */
-    --primary: 42 28% 72%;
-    --primary-foreground: 220 20% 7%;
+    /* Warm Gold accent */
+    --primary: 38 45% 45%;
+    --primary-foreground: 40 30% 98%;
 
-    /* Muted Platinum */
-    --secondary: 45 8% 88%;
-    --secondary-foreground: 220 20% 7%;
+    /* Rich Charcoal */
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 40 30% 97%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 40 15% 92%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 42 28% 72%;
-    --accent-foreground: 220 20% 7%;
+    /* Violet-Gold accent blend */
+    --accent: 270 35% 55%;
+    --accent-foreground: 40 30% 98%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 42 28% 72%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 38 45% 45%;
 
     --radius: 0.5rem;
 
     /* Refined shadows */
-    --shadow-soft: 0 4px 24px -4px hsl(220 20% 5% / 0.3);
-    --shadow-elevated: 0 20px 60px -10px hsl(220 20% 5% / 0.5);
-    --shadow-glow-gold: 0 0 40px hsl(42 28% 72% / 0.12);
-    --shadow-glow-platinum: 0 0 40px hsl(45 8% 88% / 0.08);
+    --shadow-soft: 0 4px 24px -4px hsl(220 20% 10% / 0.08);
+    --shadow-elevated: 0 20px 60px -10px hsl(220 20% 10% / 0.12);
+    --shadow-glow-gold: 0 0 40px hsl(38 45% 45% / 0.15);
+    --shadow-glow-violet: 0 0 40px hsl(270 35% 55% / 0.12);
     
     /* Subtle gradients */
-    --gradient-dark: linear-gradient(180deg, hsl(220 20% 7%), hsl(220 18% 5%));
-    --gradient-card: linear-gradient(135deg, hsl(220 18% 12%), hsl(220 18% 8%));
-    --gradient-gold: linear-gradient(135deg, hsl(42 28% 72% / 0.1), hsl(42 28% 72% / 0.02));
+    --gradient-cream: linear-gradient(180deg, hsl(40 30% 97%), hsl(40 25% 94%));
+    --gradient-card: linear-gradient(135deg, hsl(40 25% 99%), hsl(40 20% 96%));
+    --gradient-hero: linear-gradient(135deg, hsl(40 30% 97%) 0%, hsl(40 25% 94%) 50%, hsl(270 15% 95%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(38 45% 45%), hsl(270 35% 55%));
+    --gradient-subtle: linear-gradient(135deg, hsl(38 45% 45% / 0.05), hsl(270 35% 55% / 0.05));
     
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -70,7 +73,7 @@
     overflow-x: hidden;
   }
 
-  /* Subtle geometric texture background */
+  /* Subtle warm gradient background */
   body::before {
     content: '';
     position: fixed;
@@ -79,10 +82,11 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 20%, hsl(42 28% 72% / 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, hsl(42 28% 72% / 0.01) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 0%, hsl(38 45% 45% / 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, hsl(270 35% 55% / 0.03) 0%, transparent 50%),
+      var(--gradient-cream);
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -123,43 +127,68 @@
     @apply leading-relaxed;
   }
 
-  /* Gold accent underline for editorial links */
+  /* Gold-to-violet accent underline for editorial links */
   .editorial-link {
     @apply relative inline-block;
   }
   
   .editorial-link::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 origin-right transition-transform duration-300;
+    @apply absolute bottom-0 left-0 w-full h-px scale-x-0 origin-right transition-transform duration-300;
+    background: var(--gradient-accent);
   }
   
   .editorial-link:hover::after {
     @apply scale-x-100 origin-left;
   }
 
-  /* Champagne gold rule */
-  .gold-rule {
-    @apply h-px bg-gradient-to-r from-transparent via-primary to-transparent;
+  /* Gradient accent rule */
+  .gradient-rule {
+    @apply h-px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), hsl(var(--accent)), transparent);
   }
 }
 
 /* Premium button overrides */
 @layer components {
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300;
-    @apply border border-primary/20;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300;
   }
 
   .btn-outline {
-    @apply border border-primary/30 text-primary hover:bg-primary/10 transition-all duration-300;
+    @apply border border-secondary/30 text-secondary hover:bg-secondary/5 transition-all duration-300;
   }
 
-  /* Card with subtle gold border on hover */
+  .btn-gradient {
+    background: var(--gradient-accent);
+    @apply text-primary-foreground transition-all duration-300;
+  }
+
+  .btn-gradient:hover {
+    filter: brightness(1.1);
+    box-shadow: var(--shadow-glow-gold);
+  }
+
+  /* Card with subtle gradient border on hover */
   .card-premium {
     @apply bg-card border border-border/50 transition-all duration-500;
   }
 
   .card-premium:hover {
-    @apply border-primary/30 shadow-glow-gold;
+    @apply border-primary/40;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Gradient text utility */
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle gradient background sections */
+  .section-gradient {
+    background: var(--gradient-subtle);
   }
 }

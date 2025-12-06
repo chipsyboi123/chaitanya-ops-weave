@@ -22,7 +22,7 @@ const Home = () => {
             <Button 
               size="lg" 
               asChild 
-              className="text-base px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/20 transition-all duration-300"
+              className="text-base px-8 py-6 bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300"
             >
               <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
                 Book Consultation
@@ -32,7 +32,7 @@ const Home = () => {
               size="lg" 
               variant="outline" 
               asChild 
-              className="text-base px-8 py-6 border border-primary/30 text-primary hover:bg-primary/10 transition-all duration-300"
+              className="text-base px-8 py-6 border border-secondary/30 text-secondary hover:bg-secondary/5 transition-all duration-300"
             >
               <Link to="/services">
                 See Capabilities
@@ -122,7 +122,7 @@ const Home = () => {
       </SectionContainer>
 
       {/* Editorial Section - Why Modern Wealth Requires Modern Systems */}
-      <SectionContainer className="bg-card/30">
+      <SectionContainer className="section-gradient">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="mb-8 font-serif">Why Modern Wealth Requires Modern Systems</h2>
           <div className="space-y-6 text-muted-foreground leading-relaxed">
@@ -163,7 +163,7 @@ const Home = () => {
       </SectionContainer>
 
       {/* About Chaitanya Section */}
-      <SectionContainer className="bg-card/30">
+      <SectionContainer className="section-gradient">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
             <div className="lg:col-span-1">
@@ -201,7 +201,7 @@ const Home = () => {
             <Button 
               size="lg" 
               asChild 
-              className="text-base px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/20"
+              className="text-base px-8 py-6 bg-secondary text-secondary-foreground hover:bg-secondary/90"
             >
               <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
                 Work With Me
@@ -211,7 +211,7 @@ const Home = () => {
               size="lg" 
               variant="outline" 
               asChild
-              className="text-base px-8 py-6 border border-primary/30 text-primary hover:bg-primary/10"
+              className="text-base px-8 py-6 border border-secondary/30 text-secondary hover:bg-secondary/5"
             >
               <Link to="/contact">
                 Get Transformation Blueprint
