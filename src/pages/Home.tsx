@@ -27,7 +27,7 @@ const Home = () => {
         </div>
         
         <div className="container mx-auto px-4 lg:px-8 z-10 text-center max-w-5xl relative py-16">
-          <h1 className="mb-8 opacity-0 animate-fade-in font-display font-light text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-white via-white to-primary bg-clip-text text-transparent drop-shadow-lg" style={{ animationDelay: "0.1s" }}>
+          <h1 className="mb-8 opacity-0 animate-fade-in font-serif text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-white via-white to-primary bg-clip-text text-transparent drop-shadow-lg" style={{ animationDelay: "0.1s" }}>
             Precision Systems for<br />Modern Wealth Firms
           </h1>
           
