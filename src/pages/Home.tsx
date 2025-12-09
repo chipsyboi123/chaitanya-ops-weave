@@ -49,7 +49,7 @@ const Home = () => {
               size="lg" 
               variant="outline" 
               asChild 
-              className="text-base px-8 py-6 border border-white/50 text-white hover:bg-white/10 transition-all duration-300"
+              className="text-base px-8 py-6 border-2 border-white bg-white/10 text-white hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
             >
               <Link to="/services">
                 See Capabilities
