@@ -36,7 +36,7 @@ const Navbar = () => {
             to="/" 
             className="text-xl font-serif tracking-tight text-foreground hover:text-primary transition-colors"
           >
-            Chaitanya Pandit
+            EnableWealth
           </Link>
 
           {/* Desktop Navigation */}

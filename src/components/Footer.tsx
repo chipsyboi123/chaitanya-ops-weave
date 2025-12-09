@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="text-xl font-serif text-foreground mb-4 inline-block">
-              Chaitanya Pandit
+              EnableWealth
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mt-4">
               Institutional-grade systems and AI-enabled operations for modern wealth practices.
@@ -55,7 +55,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Chaitanya Pandit. All rights reserved.
+            © {new Date().getFullYear()} EnableWealth. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">

@@ -12,7 +12,7 @@ const About = () => {
           {/* Header */}
           <div className="text-center mb-20">
             <p className="text-xs uppercase tracking-widest text-primary mb-6 font-medium">About</p>
-            <h1 className="mb-8">Chaitanya Pandit</h1>
+            <h1 className="mb-8">EnableWealth</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Building institutional-grade systems for the next generation of Indian wealth management.
             </p>
