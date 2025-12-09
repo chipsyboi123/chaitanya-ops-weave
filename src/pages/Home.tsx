@@ -89,10 +89,10 @@ const Home = () => {
           </blockquote>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-              <span className="text-sm font-semibold text-primary">CP</span>
+              <span className="text-sm font-semibold text-primary">EW</span>
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">Chaitanya Pandit</p>
+              <p className="text-sm font-medium text-foreground">EnableWealth</p>
               <p className="text-xs text-muted-foreground">Founder</p>
             </div>
           </div>
@@ -222,11 +222,11 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
             <div className="lg:col-span-1">
               <div className="w-32 h-32 mx-auto lg:mx-0 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                <span className="text-3xl font-serif text-primary">CP</span>
+                <span className="text-3xl font-serif text-primary">EW</span>
               </div>
             </div>
             <div className="lg:col-span-2 text-center lg:text-left">
-              <h3 className="mb-4">Chaitanya Pandit</h3>
+              <h3 className="mb-4">EnableWealth</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Background in multi-asset research, having worked with AIFs, PMS structures, and UHNI families. A unique intersection of design thinking, technology, and quantitative finance.
               </p>
