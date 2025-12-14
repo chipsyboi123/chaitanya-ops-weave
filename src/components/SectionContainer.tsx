@@ -3,12 +3,14 @@ import { ReactNode } from "react";
 interface SectionContainerProps {
   children: ReactNode;
   className?: string;
+  narrow?: boolean;
+  id?: string;
 }
 
-const SectionContainer = ({ children, className = "" }: SectionContainerProps) => {
+const SectionContainer = ({ children, className = "", narrow = false, id }: SectionContainerProps) => {
   return (
-    <section className={`py-20 lg:py-32 ${className}`}>
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id={id} className={`py-16 lg:py-24 ${className}`}>
+      <div className={`container mx-auto px-4 lg:px-6 ${narrow ? 'max-w-[1120px]' : ''}`}>
         {children}
       </div>
     </section>
