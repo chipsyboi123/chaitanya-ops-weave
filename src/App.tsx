@@ -14,31 +14,8 @@ import Writing from "./pages/Writing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import useSmoothScroll from "./hooks/useSmoothScroll";
 
 const queryClient = new QueryClient();
-
-const AppContent = () => {
-  useSmoothScroll();
-  
-  return (
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/work" element={<Work />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/labs" element={<Labs />} />
-        <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
-        <Route path="/writing" element={<Writing />} />
-        <Route path="/writing/:id" element={<Writing />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </MainLayout>
-  );
-};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -46,7 +23,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppContent />
+        <MainLayout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/labs" element={<Labs />} />
+            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
+            <Route path="/writing" element={<Writing />} />
+            <Route path="/writing/:id" element={<Writing />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </MainLayout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
