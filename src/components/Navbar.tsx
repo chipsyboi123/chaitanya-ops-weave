@@ -182,13 +182,13 @@ const Navbar = () => {
                   className="group block p-5 bg-[#2A2A2A] rounded-xl hover:bg-[#333333] transition-colors duration-200 border border-white/5 hover:border-white/10"
                 >
                   <div 
-                    className="text-[15px] font-medium text-white mb-2 group-hover:text-white"
+                    className="text-base font-medium text-white mb-2 group-hover:text-white"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {solution.title}
                   </div>
                   <div 
-                    className="text-[13px] text-white/70 leading-relaxed"
+                    className="text-[15px] text-white/70 leading-relaxed"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {solution.subtitle}
