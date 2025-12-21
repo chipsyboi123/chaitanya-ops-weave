@@ -111,11 +111,6 @@ const Home = () => {
       <section className="relative min-h-[85vh] flex items-center pt-20 lg:pt-24">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-3xl">
-            <p className="eyebrow mb-6 opacity-0 animate-fade-in" style={{
-              animationDelay: "0.1s"
-            }}>
-              Built for wealth firms that value precision
-            </p>
             
             <h1 style={{
               animationDelay: "0.2s"
