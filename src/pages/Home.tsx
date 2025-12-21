@@ -99,7 +99,7 @@ const Home = () => {
               </p>
               
               <h1 className="mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                Precision Systems for Modern Wealth Firms
+                Building Scalable Systems for Modern Wealth Firms.
               </h1>
               
               <p className="text-lg text-muted-foreground leading-relaxed mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.3s" }}>

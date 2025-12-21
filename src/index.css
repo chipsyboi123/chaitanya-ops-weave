@@ -107,9 +107,9 @@
     color: hsl(var(--foreground));
   }
 
-  /* H1 - 72px/80px desktop, 48px/54px mobile */
+  /* H1 - 64px/72px desktop, 42px/48px mobile */
   h1 {
-    @apply text-[48px] md:text-[64px] lg:text-[72px];
+    @apply text-[42px] md:text-[56px] lg:text-[64px];
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
