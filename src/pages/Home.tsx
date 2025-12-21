@@ -110,81 +110,45 @@ const Home = () => {
       {/* HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center pt-20 lg:pt-24">
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left: Hero Content */}
-            <div className="max-w-xl">
-              <p className="eyebrow mb-6 opacity-0 animate-fade-in" style={{
+          <div className="max-w-3xl">
+            <p className="eyebrow mb-6 opacity-0 animate-fade-in" style={{
               animationDelay: "0.1s"
             }}>
-                Built for wealth firms that value precision
-              </p>
-              
-              <h1 style={{
+              Built for wealth firms that value precision
+            </p>
+            
+            <h1 style={{
               animationDelay: "0.2s"
-            }} className="mb-6 opacity-0 animate-fade-in text-5xl">
-                Building Scalable Systems for Modern Wealth Firms.
-              </h1>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6 opacity-0 animate-fade-in" style={{
+            }} className="mb-6 opacity-0 animate-fade-in">
+              Building Scalable Systems for Modern Wealth Firms.
+            </h1>
+            
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6 opacity-0 animate-fade-in" style={{
               animationDelay: "0.3s"
             }}>
-                We replace manual operations with automation across reporting, RM workflows, compliance knowledge, and client experience—so teams move faster and clients feel the difference.
-              </p>
-              
-              <div className="mb-8 opacity-0 animate-fade-in" style={{
+              We replace manual operations with automation across reporting, RM workflows, compliance knowledge, and client experience—so teams move faster and clients feel the difference.
+            </p>
+            
+            <div className="mb-8 opacity-0 animate-fade-in" style={{
               animationDelay: "0.35s"
             }}>
-                <RotatingText prefix="We enable" phrases={rotatingPhrases} />
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{
-              animationDelay: "0.4s"
-            }}>
-                <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-[#0F0F0F] border border-transparent hover:border-primary/30 transition-all px-8">
-                  <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                    Book a Blueprint Call
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="border border-secondary/20 text-secondary hover:bg-secondary/5 px-8">
-                  <Link to="/work">
-                    See Proof
-                  </Link>
-                </Button>
-              </div>
+              <RotatingText prefix="We enable" phrases={rotatingPhrases} />
             </div>
             
-            {/* Right: Proof Card */}
-            <div className="opacity-0 animate-fade-in" style={{
-            animationDelay: "0.5s"
-          }}>
-              <Card className="p-8 lg:p-10 border border-border/50 bg-card shadow-soft rounded-hero">
-                <h3 className="text-lg font-semibold mb-6">Documented Outcomes</h3>
-                <div className="space-y-5">
-                  {[{
-                  metric: "48 hrs → 4 hrs",
-                  label: "RM queries"
-                }, {
-                  metric: "30–40% faster",
-                  label: "Reporting cycle"
-                }, {
-                  metric: "3× more effective",
-                  label: "Task tracking"
-                }, {
-                  metric: "100% AI-assisted",
-                  label: "Review prep"
-                }].map((item, i) => <div key={i} className="flex items-center gap-4">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-foreground">{item.metric}</p>
-                        <p className="text-sm text-muted-foreground">{item.label}</p>
-                      </div>
-                    </div>)}
-                </div>
-                <p className="text-xs text-muted-foreground mt-6 pt-5 border-t border-border/50 italic">
-                  Outcomes vary by workflow maturity; we measure before/after.
-                </p>
-              </Card>
+            <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{
+              animationDelay: "0.4s"
+            }}>
+              <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-[#0F0F0F] border border-transparent hover:border-primary/30 transition-all px-8">
+                <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
+                  Book a Blueprint Call
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="border border-secondary/20 text-secondary hover:bg-secondary/5 px-8">
+                <Link to="/work">
+                  See Proof
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -193,10 +157,6 @@ const Home = () => {
       {/* TRUST STRIP */}
       <TrustStrip statements={trustStatements} />
 
-      {/* FOUNDER NOTE */}
-      <SectionContainer>
-        <FounderNote quote="Technology in wealth management is no longer about efficiency — it is about survival. Clients expect clarity, speed, intelligence, and proactive communication. EnableWealth brings institutional-grade systems and automation to firms that want to scale with sophistication—without sacrificing discretion." name="Chaitanya Pandit" title="Founder" />
-      </SectionContainer>
 
       {/* THREE PILLARS */}
       <SectionContainer className="bg-muted/30">
@@ -391,6 +351,15 @@ const Home = () => {
           
           <FAQAccordion items={faqItems} />
         </div>
+      </SectionContainer>
+
+      {/* FOUNDER NOTE - Bottom */}
+      <SectionContainer>
+        <FounderNote 
+          quote="Technology in wealth management is no longer about efficiency — it is about survival. Clients expect clarity, speed, intelligence, and proactive communication. EnableWealth brings institutional-grade systems and automation to firms that want to scale with sophistication—without sacrificing discretion." 
+          name="Chaitanya Pandit" 
+          title="Founder" 
+        />
       </SectionContainer>
 
       {/* FINAL CTA */}
