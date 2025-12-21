@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import navbarGradient from "@/assets/navbar-gradient.png";
 
 const Navbar = () => {
   const location = useLocation();
@@ -51,23 +52,13 @@ const Navbar = () => {
             scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
         >
-          {/* Gradient background layer */}
-          <div 
-            className="absolute inset-0 opacity-95"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 50% at 80% 60%, rgba(236, 72, 153, 0.35) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(99, 102, 241, 0.2) 0%, transparent 40%),
-                linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1f2937 100%)
-              `
-            }}
-          />
-          {/* Subtle inner glow */}
+          {/* Image background layer */}
           <div 
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%)'
+              backgroundImage: `url(${navbarGradient})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
             }}
           />
           {/* Border glow effect */}
