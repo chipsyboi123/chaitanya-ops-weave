@@ -35,18 +35,18 @@ const Navbar = () => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="text-xl font-serif tracking-tight text-foreground hover:text-primary transition-colors"
+            className="text-2xl font-serif tracking-tight text-foreground hover:text-primary transition-colors"
           >
             EnableWealth
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-sm font-medium transition-colors duration-300 ${
+                className={`text-base font-medium transition-colors duration-300 ${
                   location.pathname === item.path 
                     ? "text-foreground" 
                     : "text-muted-foreground hover:text-foreground"
@@ -83,7 +83,7 @@ const Navbar = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`text-sm font-medium transition-colors py-2 ${
+                  className={`text-base font-medium transition-colors py-2 ${
                     location.pathname === item.path 
                       ? "text-foreground" 
                       : "text-muted-foreground"
