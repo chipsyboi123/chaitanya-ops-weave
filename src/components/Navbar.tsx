@@ -45,12 +45,35 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 pt-4">
+        {/* Navbar with gradient background */}
         <div 
-          className={`mx-auto max-w-[1200px] bg-[#0A0A0A] rounded-2xl transition-all duration-300 ${
-            scrolled ? 'shadow-lg shadow-black/20' : ''
+          className={`relative mx-auto max-w-[1200px] rounded-2xl transition-all duration-300 overflow-hidden ${
+            scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
         >
-          <div className="flex items-center justify-between h-14 lg:h-16 px-5 lg:px-8">
+          {/* Gradient background layer */}
+          <div 
+            className="absolute inset-0 opacity-95"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 80% 60%, rgba(236, 72, 153, 0.35) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(99, 102, 241, 0.2) 0%, transparent 40%),
+                linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1f2937 100%)
+              `
+            }}
+          />
+          {/* Subtle inner glow */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%)'
+            }}
+          />
+          {/* Border glow effect */}
+          <div className="absolute inset-0 rounded-2xl border border-white/10" />
+          
+          <div className="relative flex items-center justify-between h-14 lg:h-16 px-5 lg:px-8">
             {/* Logo */}
             <Link 
               to="/" 
@@ -74,7 +97,7 @@ const Navbar = () => {
                     className={`flex items-center gap-1 px-4 py-2 text-[15px] font-medium transition-colors duration-200 rounded-lg ${
                       location.pathname === item.path 
                         ? "text-white" 
-                        : "text-white hover:text-white/80 hover:bg-white/5"
+                        : "text-white hover:text-white/80 hover:bg-white/10"
                     }`}
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
@@ -95,7 +118,7 @@ const Navbar = () => {
               <Button 
                 asChild 
                 variant="outline"
-                className="bg-transparent text-white border-white/20 hover:bg-white hover:text-black hover:border-white transition-all duration-200 rounded-full px-5 h-9 text-[14px] font-medium"
+                className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white hover:text-slate-900 hover:border-white transition-all duration-200 rounded-full px-5 h-9 text-[14px] font-medium"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 <Link to="/contact">Let's Talk</Link>
@@ -114,7 +137,7 @@ const Navbar = () => {
 
           {/* Mobile Navigation */}
           {isOpen && (
-            <div className="md:hidden py-4 px-5 border-t border-white/10">
+            <div className="relative md:hidden py-4 px-5 border-t border-white/10">
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <Link
@@ -123,8 +146,8 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`text-[15px] font-medium transition-colors py-3 px-3 rounded-lg ${
                       location.pathname === item.path 
-                        ? "text-white bg-white/5" 
-                        : "text-white hover:bg-white/5"
+                        ? "text-white bg-white/10" 
+                        : "text-white hover:bg-white/10"
                     }`}
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
@@ -135,7 +158,7 @@ const Navbar = () => {
                   <Button 
                     asChild 
                     variant="outline"
-                    className="w-full bg-transparent text-white border-white/20 hover:bg-white hover:text-black rounded-full h-10 text-[14px] font-medium"
+                    className="w-full bg-white/10 text-white border-white/20 hover:bg-white hover:text-slate-900 rounded-full h-10 text-[14px] font-medium"
                   >
                     <Link to="/contact" onClick={() => setIsOpen(false)}>Let's Talk</Link>
                   </Button>
@@ -154,8 +177,30 @@ const Navbar = () => {
         onMouseEnter={() => setSolutionsOpen(true)}
         onMouseLeave={() => setSolutionsOpen(false)}
       >
-        <div className="mx-auto max-w-[1200px] bg-[#1A1A1A] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden border border-white/5">
-          <div className="p-8">
+        <div className="relative mx-auto max-w-[1200px] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+          {/* Gradient background layer for mega menu */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse 70% 50% at 30% 30%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 60% at 70% 70%, rgba(236, 72, 153, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                linear-gradient(145deg, #0f172a 0%, #1e1b4b 40%, #1f2937 100%)
+              `
+            }}
+          />
+          {/* Inner glow */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 60%)'
+            }}
+          />
+          {/* Border */}
+          <div className="absolute inset-0 rounded-2xl border border-white/10" />
+          
+          <div className="relative p-8">
             {/* Header */}
             <div className="mb-6">
               <h3 
@@ -179,16 +224,16 @@ const Navbar = () => {
                   key={index}
                   to={solution.path}
                   onClick={() => setSolutionsOpen(false)}
-                  className="group block p-5 bg-[#2A2A2A] rounded-xl hover:bg-[#333333] transition-colors duration-200 border border-white/5 hover:border-white/10"
+                  className="group block p-5 bg-white/5 backdrop-blur-sm rounded-xl hover:bg-white/10 transition-all duration-200 border border-white/10 hover:border-white/20"
                 >
                   <div 
-                    className="text-base font-medium text-white mb-2 group-hover:text-white"
+                    className="text-base font-medium text-white mb-2"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {solution.title}
                   </div>
                   <div 
-                    className="text-[15px] text-white/70 leading-relaxed"
+                    className="text-[15px] text-white/70 leading-relaxed group-hover:text-white/80 transition-colors"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     {solution.subtitle}
