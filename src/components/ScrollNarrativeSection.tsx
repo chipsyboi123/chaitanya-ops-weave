@@ -3,27 +3,23 @@ import FluidBackground from "./FluidBackground";
 
 interface ScrollPhase {
   header: string;
-  subtext: React.ReactNode;
+  subtextWords: string[];
+  boldWords?: string[];
 }
 
 const phases: ScrollPhase[] = [
   {
     header: "Today's processes are fragmented and inefficient.",
-    subtext:
-      "Research, reporting, client follow-ups, and compliance workflows live across different people, tools, and spreadsheets. As firms grow, this fragmentation slows teams down and increases dependency on individuals.",
+    subtextWords: "Research, reporting, client follow-ups, and compliance workflows live across different people, tools, and spreadsheets. As firms grow, this fragmentation slows teams down and increases dependency on individuals.".split(" "),
   },
   {
     header: "A unified system that fits the way you already work.",
-    subtext: (
-      <>
-        Instead of adding another tool, we bring <strong className="font-semibold text-foreground">existing workflows</strong> together into one connected structure — designed around how your firm already operates.
-      </>
-    ),
+    subtextWords: "Instead of adding another tool, we bring existing workflows together into one connected structure — designed around how your firm already operates.".split(" "),
+    boldWords: ["existing", "workflows"],
   },
   {
     header: "See your firm's work — clearly, in one place.",
-    subtext:
-      "Research, operations, and client activity are visible, connected, and auditable — enabling faster decisions and smoother execution across teams.",
+    subtextWords: "Research, operations, and client activity are visible, connected, and auditable — enabling faster decisions and smoother execution across teams.".split(" "),
   },
 ];
 
@@ -115,20 +111,23 @@ const ScrollNarrativeSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const currentPhase = scrollProgress < 0.35 ? 0 : scrollProgress < 0.65 ? 1 : 2;
+  const currentPhase = scrollProgress < 0.3 ? 0 : scrollProgress < 0.6 ? 1 : 2;
 
-  // Calculate text reveal progress within each phase - slower, more gradual
-  const getTextRevealProgress = (phaseIndex: number) => {
-    const phaseStarts = [0, 0.35, 0.65];
-    const phaseDurations = [0.35, 0.3, 0.35];
+  // Calculate text reveal progress within each phase - word by word
+  const getTextRevealProgress = (phaseIndex: number, totalWords: number) => {
+    const phaseStarts = [0, 0.3, 0.6];
+    const phaseDurations = [0.3, 0.3, 0.4];
     
-    if (currentPhase !== phaseIndex) return { headerProgress: 0, subtextProgress: 0 };
+    if (currentPhase !== phaseIndex) return { headerProgress: 0, wordsVisible: 0 };
     
     const phaseProgress = (scrollProgress - phaseStarts[phaseIndex]) / phaseDurations[phaseIndex];
-    const headerProgress = Math.min(1, phaseProgress * 2.5); // Header reveals more gradually
-    const subtextProgress = Math.max(0, Math.min(1, (phaseProgress - 0.15) * 1.5)); // Subtext reveals slower
+    const headerProgress = Math.min(1, phaseProgress * 4); // Header reveals quickly
+    // Words reveal progressively after header
+    const wordRevealStart = 0.15;
+    const wordProgress = Math.max(0, (phaseProgress - wordRevealStart) / (1 - wordRevealStart));
+    const wordsVisible = Math.floor(wordProgress * totalWords);
     
-    return { headerProgress, subtextProgress };
+    return { headerProgress, wordsVisible };
   };
 
   const getTileTransform = (
@@ -136,8 +135,8 @@ const ScrollNarrativeSection = () => {
     startY: number,
     index: number
   ) => {
-    const phase2Start = 0.35;
-    const phase3Start = 0.65;
+    const phase2Start = 0.3;
+    const phase3Start = 0.6;
 
     if (scrollProgress < phase2Start) {
       return {
@@ -184,10 +183,10 @@ const ScrollNarrativeSection = () => {
   };
 
   const centralContainerOpacity =
-    scrollProgress < 0.35 ? 0 : scrollProgress < 0.5 ? (scrollProgress - 0.35) / 0.15 : 1;
+    scrollProgress < 0.3 ? 0 : scrollProgress < 0.45 ? (scrollProgress - 0.3) / 0.15 : 1;
 
   const uiLayoutOpacity =
-    scrollProgress < 0.65 ? 0 : (scrollProgress - 0.65) / 0.35;
+    scrollProgress < 0.6 ? 0 : (scrollProgress - 0.6) / 0.4;
 
   const lineProgress = getLineProgress();
 
@@ -195,7 +194,7 @@ const ScrollNarrativeSection = () => {
     <section
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: "280vh" }}
+      style={{ height: "400vh" }}
     >
       <div className="sticky top-0 h-screen flex overflow-hidden">
         {/* Left Side - Visual Animation (60%) */}
@@ -272,8 +271,8 @@ const ScrollNarrativeSection = () => {
             <div
               className="absolute transition-all duration-1000 z-30"
               style={{
-                opacity: scrollProgress > 0.4 ? 1 : 0,
-                transform: `translateY(${scrollProgress > 0.65 ? -200 : 0}px)`,
+                opacity: scrollProgress > 0.35 ? 1 : 0,
+                transform: `translateY(${scrollProgress > 0.6 ? -200 : 0}px)`,
               }}
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
@@ -369,7 +368,7 @@ const ScrollNarrativeSection = () => {
         <div className="w-[40%] flex items-center justify-center px-12 lg:px-16">
           <div className="max-w-md relative">
             {phases.map((phase, index) => {
-              const { headerProgress, subtextProgress } = getTextRevealProgress(index);
+              const { headerProgress, wordsVisible } = getTextRevealProgress(index, phase.subtextWords.length);
               return (
                 <div
                   key={index}
@@ -381,7 +380,7 @@ const ScrollNarrativeSection = () => {
                   }}
                 >
                   <h3 
-                    className="text-2xl lg:text-3xl font-semibold leading-tight mb-6 text-foreground transition-all duration-700"
+                    className="text-2xl lg:text-3xl font-semibold leading-tight mb-6 text-foreground transition-all duration-500"
                     style={{
                       opacity: headerProgress,
                       transform: `translateY(${(1 - headerProgress) * 20}px)`,
@@ -389,14 +388,22 @@ const ScrollNarrativeSection = () => {
                   >
                     {phase.header}
                   </h3>
-                  <p 
-                    className="text-base lg:text-lg text-muted-foreground leading-relaxed transition-all duration-700"
-                    style={{
-                      opacity: subtextProgress,
-                      transform: `translateY(${(1 - subtextProgress) * 15}px)`,
-                    }}
-                  >
-                    {phase.subtext}
+                  <p className="text-base lg:text-lg leading-relaxed">
+                    {phase.subtextWords.map((word, wordIndex) => {
+                      const isVisible = wordIndex < wordsVisible;
+                      const isBold = phase.boldWords?.includes(word.replace(/[^a-zA-Z]/g, ''));
+                      return (
+                        <span
+                          key={wordIndex}
+                          className={`transition-all duration-300 ${isBold ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+                          style={{
+                            opacity: isVisible ? 1 : 0.15,
+                          }}
+                        >
+                          {word}{' '}
+                        </span>
+                      );
+                    })}
                   </p>
                 </div>
               );
