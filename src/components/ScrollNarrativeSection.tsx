@@ -286,24 +286,21 @@ const ScrollNarrativeSection = () => {
                 opacity: scrollProgress > 0.45 ? 1 : 0,
                 transform: `translateY(${scrollProgress > 0.7 ? -200 : 0}px)`,
               }}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               <div 
-                className="rounded-2xl border-2 border-border/50 overflow-hidden px-8 py-4"
+                className="relative rounded-2xl overflow-hidden px-8 py-4 shadow-xl"
                 style={{
-                  background: scrollProgress > 0.7 ? 'transparent' : undefined,
+                  border: '2px solid rgba(255, 255, 255, 0.25)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                 }}
               >
-                {scrollProgress <= 0.7 && (
-                  <div className="absolute inset-0 -z-10">
-                    <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
-                  </div>
-                )}
-                <span
-                  className="text-xl font-semibold text-foreground drop-shadow-lg transition-colors duration-700"
-                  style={{
-                    color: scrollProgress > 0.7 ? 'hsl(var(--foreground))' : 'white',
-                  }}
-                >
+                <div className="absolute inset-0 -z-10">
+                  <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
+                </div>
+                <span className="relative z-10 text-xl font-semibold text-white drop-shadow-lg">
                   A Unified System
                 </span>
               </div>
