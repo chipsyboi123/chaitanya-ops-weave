@@ -25,11 +25,11 @@ const phases: ScrollPhase[] = [
 ];
 
 const departmentTiles = [
-  { label: "Operations", startX: -220, startY: -140, color: "#3B82F6", skin: "#E8C4A0", hair: "#2C1810" },
-  { label: "Research", startX: 200, startY: -120, color: "#6366F1", skin: "#D4A574", hair: "#1A1A2E" },
-  { label: "Sales", startX: -240, startY: 60, color: "#EC4899", skin: "#F5D0C5", hair: "#4A3728" },
-  { label: "Client Servicing", startX: 220, startY: 80, color: "#8B5CF6", skin: "#C4956A", hair: "#0D0D0D" },
-  { label: "Relationship Management", startX: 0, startY: 160, color: "#14B8A6", skin: "#E0B89A", hair: "#3D2314" },
+  { label: "Operations", startX: -220, startY: -140, color: "#151838", skin: "#E8C4A0", hair: "#2C1810" },
+  { label: "Research", startX: 200, startY: -120, color: "#312a6a", skin: "#D4A574", hair: "#1A1A2E" },
+  { label: "Sales", startX: -240, startY: 60, color: "#1f2e65", skin: "#F5D0C5", hair: "#4A3728" },
+  { label: "Client Servicing", startX: 220, startY: 80, color: "#2f1e45", skin: "#C4956A", hair: "#0D0D0D" },
+  { label: "Relationship Management", startX: 0, startY: 160, color: "#353c4f", skin: "#E0B89A", hair: "#3D2314" },
 ];
 
 const navItems = [
