@@ -128,10 +128,11 @@ const ScrollNarrativeSection = () => {
     
     const phaseProgress = (scrollProgress - phaseStarts[phaseIndex]) / phaseDurations[phaseIndex];
     const headerProgress = Math.min(1, phaseProgress * 4); // Header reveals quickly
-    // Words reveal progressively after header
-    const wordRevealStart = 0.12;
-    const wordProgress = Math.max(0, (phaseProgress - wordRevealStart) / (1 - wordRevealStart));
-    const wordsVisible = Math.floor(wordProgress * totalWords);
+    // Words reveal progressively after header - ensure all words visible by 85% of phase
+    const wordRevealStart = 0.10;
+    const wordRevealEnd = 0.85;
+    const wordProgress = Math.max(0, Math.min(1, (phaseProgress - wordRevealStart) / (wordRevealEnd - wordRevealStart)));
+    const wordsVisible = Math.ceil(wordProgress * totalWords);
     
     return { headerProgress, wordsVisible };
   };
@@ -346,6 +347,18 @@ const ScrollNarrativeSection = () => {
                         );
                       })}
                     </p>
+                    {/* CTA Button - only show on final phase when text is fully revealed */}
+                    {index === 2 && (
+                      <button
+                        className="mt-6 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg transition-all duration-500 hover:opacity-90"
+                        style={{
+                          opacity: wordsVisible >= phase.subtextWords.length ? 1 : 0,
+                          transform: `translateY(${wordsVisible >= phase.subtextWords.length ? 0 : 10}px)`,
+                        }}
+                      >
+                        See How We Work
+                      </button>
+                    )}
                   </div>
                 );
               })}
@@ -580,6 +593,18 @@ const ScrollNarrativeSection = () => {
                       );
                     })}
                   </p>
+                  {/* CTA Button - only show on final phase when text is fully revealed */}
+                  {index === 2 && (
+                    <button
+                      className="mt-8 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg transition-all duration-500 hover:opacity-90"
+                      style={{
+                        opacity: wordsVisible >= phase.subtextWords.length ? 1 : 0,
+                        transform: `translateY(${wordsVisible >= phase.subtextWords.length ? 0 : 10}px)`,
+                      }}
+                    >
+                      See How We Work
+                    </button>
+                  )}
                 </div>
               );
             })}
