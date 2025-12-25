@@ -279,44 +279,53 @@ const ScrollNarrativeSection = () => {
               );
             })}
 
-            {/* Central Unified System Container */}
+            {/* "A Unified System" Label - moves up in phase 3 */}
+            <div
+              className="absolute transition-all duration-1000 z-30"
+              style={{
+                opacity: scrollProgress > 0.45 ? 1 : 0,
+                transform: `translateY(${scrollProgress > 0.7 ? -200 : 0}px)`,
+              }}
+            >
+              <div 
+                className="rounded-2xl border-2 border-border/50 overflow-hidden px-8 py-4"
+                style={{
+                  background: scrollProgress > 0.7 ? 'transparent' : undefined,
+                }}
+              >
+                {scrollProgress <= 0.7 && (
+                  <div className="absolute inset-0 -z-10">
+                    <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
+                  </div>
+                )}
+                <span
+                  className="text-xl font-semibold text-foreground drop-shadow-lg transition-colors duration-700"
+                  style={{
+                    color: scrollProgress > 0.7 ? 'hsl(var(--foreground))' : 'white',
+                  }}
+                >
+                  A Unified System
+                </span>
+              </div>
+            </div>
+
+            {/* Central CRM Container */}
             <div
               className="absolute rounded-2xl border-2 border-border/50 overflow-hidden transition-all duration-1000 flex items-center justify-center"
               style={{
-                width: scrollProgress > 0.7 ? "420px" : "280px",
-                height: scrollProgress > 0.7 ? "340px" : "160px",
-                opacity: centralContainerOpacity,
-                transform: `scale(${centralContainerOpacity > 0 ? 1 : 0.8})`,
+                width: "420px",
+                height: "340px",
+                opacity: uiLayoutOpacity,
+                transform: `translateY(${scrollProgress > 0.7 ? 40 : 0}px) scale(${uiLayoutOpacity > 0 ? 1 : 0.9})`,
                 zIndex: 20,
               }}
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              {/* Fluid Background - shows in phase 2 */}
-              <div
-                className="absolute inset-0 transition-opacity duration-700"
-                style={{
-                  opacity: scrollProgress > 0.4 && scrollProgress < 0.78 ? 1 : 0,
-                }}
-              >
-                <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
-              </div>
-
-              {/* "A Unified System" label */}
-              <span
-                className="relative z-10 text-xl font-semibold text-white transition-opacity duration-700 drop-shadow-lg"
-                style={{
-                  opacity: scrollProgress > 0.45 && scrollProgress < 0.75 ? 1 : 0,
-                }}
-              >
-                A Unified System
-              </span>
-
               {/* Abstract UI Layout - Phase 3 */}
               <div
-                className="absolute inset-0 transition-opacity duration-700 bg-background"
-                style={{ opacity: uiLayoutOpacity }}
+                className="absolute inset-0 bg-background"
               >
                 <div className="w-full h-full flex rounded-lg overflow-hidden border border-border/40">
                   {/* Sidebar Navigation - Dark Blue */}
