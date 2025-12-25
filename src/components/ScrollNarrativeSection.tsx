@@ -326,7 +326,7 @@ const ScrollNarrativeSection = () => {
               >
                 <div className="w-full h-full flex rounded-lg overflow-hidden border border-border/40">
                   {/* Sidebar Navigation - Dark Blue */}
-                  <div className="w-28 py-4 px-2 bg-[#1e3a5f]">
+                  <div className="w-28 py-4 px-2 bg-[#171839]">
                     {navItems.map((item, i) => (
                       <div
                         key={i}
