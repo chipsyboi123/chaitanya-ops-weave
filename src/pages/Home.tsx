@@ -114,7 +114,7 @@ const Home = () => {
             
             <h1 style={{
               animationDelay: "0.2s"
-            }} className="mb-6 opacity-0 animate-fade-in">
+            }} className="text-[48px] md:text-[64px] lg:text-[72px] font-semibold tracking-tight leading-[1.1] mb-6 opacity-0 animate-fade-in">
               Building Scalable Systems for Modern Wealth Firms.
             </h1>
             
