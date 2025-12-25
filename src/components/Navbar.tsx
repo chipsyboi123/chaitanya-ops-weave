@@ -1,14 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import navbarGradient from "@/assets/navbar-gradient.png";
+import FluidBackground from "@/components/FluidBackground";
 
 const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +20,15 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!navContainerRef.current) return;
+    const rect = navContainerRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   const navItems = [
     { path: "/services", label: "Solutions", hasDropdown: true },
@@ -46,21 +58,18 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 pt-4">
-        {/* Navbar with gradient background */}
+        {/* Navbar with fluid gradient background */}
         <div 
+          ref={navContainerRef}
           className={`relative mx-auto max-w-[1200px] rounded-2xl transition-all duration-300 overflow-hidden ${
             scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Image background layer */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url(${navbarGradient})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          />
+          {/* Fluid animated background */}
+          <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
           {/* Border glow effect */}
           <div className="absolute inset-0 rounded-2xl border border-white/10" />
           
