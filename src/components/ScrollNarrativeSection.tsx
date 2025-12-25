@@ -27,12 +27,55 @@ const phases: ScrollPhase[] = [
   },
 ];
 
+// Role icons as abstract SVG paths (line-based, single-color, institutional)
+const roleIcons: Record<string, React.ReactNode> = {
+  Operations: (
+    // Checklist / stacked lines
+    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M4 6h16M4 10h12M4 14h14M4 18h10" strokeLinecap="round" />
+    </svg>
+  ),
+  Research: (
+    // Grid / document layers
+    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <path d="M4 9h16M4 14h16M9 4v16M14 4v16" />
+    </svg>
+  ),
+  Sales: (
+    // Directional arrow / pipeline
+    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  "Client Servicing": (
+    // Connected dots / conversation
+    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="6" cy="12" r="2" />
+      <circle cx="18" cy="12" r="2" />
+      <circle cx="12" cy="6" r="2" />
+      <path d="M7.5 10.5L10.5 7.5M13.5 7.5L16.5 10.5M8 12h8" />
+    </svg>
+  ),
+  "Relationship Management": (
+    // Network / linked nodes
+    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="3" />
+      <circle cx="5" cy="6" r="2" />
+      <circle cx="19" cy="6" r="2" />
+      <circle cx="5" cy="18" r="2" />
+      <circle cx="19" cy="18" r="2" />
+      <path d="M9.5 10L6.5 7.5M14.5 10L17.5 7.5M9.5 14L6.5 16.5M14.5 14L17.5 16.5" />
+    </svg>
+  ),
+};
+
 const departmentTiles = [
-  { label: "Operations", startX: -220, startY: -140, color: "#151838", skin: "#E8C4A0", hair: "#2C1810" },
-  { label: "Research", startX: 200, startY: -120, color: "#312a6a", skin: "#D4A574", hair: "#1A1A2E" },
-  { label: "Sales", startX: -240, startY: 60, color: "#1f2e65", skin: "#F5D0C5", hair: "#4A3728" },
-  { label: "Client Servicing", startX: 220, startY: 80, color: "#2f1e45", skin: "#C4956A", hair: "#0D0D0D" },
-  { label: "Relationship Management", startX: 0, startY: 160, color: "#353c4f", skin: "#E0B89A", hair: "#3D2314" },
+  { label: "Operations", startX: -220, startY: -140, color: "#151838" },
+  { label: "Research", startX: 200, startY: -120, color: "#312a6a" },
+  { label: "Sales", startX: -240, startY: 60, color: "#1f2e65" },
+  { label: "Client Servicing", startX: 220, startY: 80, color: "#2f1e45" },
+  { label: "Relationship Management", startX: 0, startY: 160, color: "#353c4f" },
 ];
 
 const navItems = [
@@ -189,92 +232,35 @@ const ScrollNarrativeSection = () => {
               })}
             </svg>
 
-            {/* Department Tiles */}
+            {/* Role Nodes - Abstract, institutional */}
             {departmentTiles.map((tile, index) => {
               const transform = getTileTransform(tile.startX, tile.startY, index);
               return (
                 <div
                   key={index}
-                  className="absolute flex flex-col items-center gap-3 transition-all duration-700 ease-out"
+                  className="absolute flex flex-col items-center gap-2 transition-all duration-700 ease-out"
                   style={{
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     opacity: transform.opacity,
                     zIndex: 10,
                   }}
                 >
-                  {/* Person Circle with Face */}
+                  {/* Abstract Role Node */}
                   <div 
-                    className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 overflow-hidden"
-                    style={{ backgroundColor: tile.color }}
+                    className="w-16 h-16 rounded-xl flex items-center justify-center border border-white/15 text-white/70"
+                    style={{ 
+                      backgroundColor: tile.color,
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    }}
                   >
-                    <svg viewBox="0 0 80 80" className="w-full h-full">
-                      {/* Head/Face */}
-                      <ellipse cx="40" cy="38" rx="22" ry="24" fill={tile.skin} />
-                      
-                      {/* Hair - different styles per person */}
-                      {index === 0 && (
-                        <>
-                          <ellipse cx="40" cy="22" rx="20" ry="14" fill={tile.hair} />
-                          <rect x="20" y="18" width="40" height="8" fill={tile.hair} />
-                        </>
-                      )}
-                      {index === 1 && (
-                        <>
-                          <ellipse cx="40" cy="20" rx="22" ry="12" fill={tile.hair} />
-                          <path d="M18 28 Q20 40 22 50 L18 50 L16 30 Z" fill={tile.hair} />
-                          <path d="M62 28 Q60 40 58 50 L62 50 L64 30 Z" fill={tile.hair} />
-                        </>
-                      )}
-                      {index === 2 && (
-                        <>
-                          <ellipse cx="40" cy="18" rx="18" ry="10" fill={tile.hair} />
-                          <path d="M22 22 Q18 35 20 48 L24 48 Q26 35 24 22 Z" fill={tile.hair} />
-                          <path d="M58 22 Q62 35 60 48 L56 48 Q54 35 56 22 Z" fill={tile.hair} />
-                        </>
-                      )}
-                      {index === 3 && (
-                        <>
-                          <ellipse cx="40" cy="20" rx="19" ry="11" fill={tile.hair} />
-                          <rect x="21" y="16" width="38" height="6" rx="3" fill={tile.hair} />
-                        </>
-                      )}
-                      {index === 4 && (
-                        <>
-                          <ellipse cx="40" cy="19" rx="20" ry="12" fill={tile.hair} />
-                          <path d="M20 24 L22 36 L18 36 Z" fill={tile.hair} />
-                          <path d="M60 24 L58 36 L62 36 Z" fill={tile.hair} />
-                        </>
-                      )}
-                      
-                      {/* Eyes */}
-                      <ellipse cx="32" cy="38" rx="4" ry="3" fill="white" />
-                      <ellipse cx="48" cy="38" rx="4" ry="3" fill="white" />
-                      <circle cx="33" cy="38" r="2" fill="#2C1810" />
-                      <circle cx="49" cy="38" r="2" fill="#2C1810" />
-                      <circle cx="33.5" cy="37.5" r="0.8" fill="white" />
-                      <circle cx="49.5" cy="37.5" r="0.8" fill="white" />
-                      
-                      {/* Eyebrows */}
-                      <path d="M28 33 Q32 31 36 33" stroke="#4A3728" strokeWidth="1.5" fill="none" />
-                      <path d="M44 33 Q48 31 52 33" stroke="#4A3728" strokeWidth="1.5" fill="none" />
-                      
-                      {/* Nose */}
-                      <path d="M40 40 L38 48 L42 48 Z" fill={tile.skin} opacity="0.6" />
-                      
-                      {/* Mouth */}
-                      <path d="M35 52 Q40 56 45 52" stroke="#B87A6A" strokeWidth="2" fill="none" strokeLinecap="round" />
-                      
-                      {/* Ears */}
-                      <ellipse cx="18" cy="40" rx="3" ry="5" fill={tile.skin} />
-                      <ellipse cx="62" cy="40" rx="3" ry="5" fill={tile.skin} />
-                    </svg>
+                    {roleIcons[tile.label]}
                   </div>
-                  {/* Label with matching color */}
+                  {/* Role Label - More prominent than icon */}
                   <div 
-                    className="px-4 py-2 rounded-lg shadow-md border border-white/20"
+                    className="px-3 py-1.5 rounded-md border border-white/10"
                     style={{ backgroundColor: tile.color }}
                   >
-                    <span className="text-sm font-medium text-white whitespace-nowrap">
+                    <span className="text-xs font-medium text-white/90 whitespace-nowrap tracking-wide">
                       {tile.label}
                     </span>
                   </div>
