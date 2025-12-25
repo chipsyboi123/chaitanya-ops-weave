@@ -69,15 +69,29 @@ const ScrollNarrativeSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const currentPhase = scrollProgress < 0.33 ? 0 : scrollProgress < 0.66 ? 1 : 2;
+  const currentPhase = scrollProgress < 0.4 ? 0 : scrollProgress < 0.7 ? 1 : 2;
+
+  // Calculate text reveal progress within each phase
+  const getTextRevealProgress = (phaseIndex: number) => {
+    const phaseStarts = [0, 0.4, 0.7];
+    const phaseDurations = [0.4, 0.3, 0.3];
+    
+    if (currentPhase !== phaseIndex) return { headerProgress: 0, subtextProgress: 0 };
+    
+    const phaseProgress = (scrollProgress - phaseStarts[phaseIndex]) / phaseDurations[phaseIndex];
+    const headerProgress = Math.min(1, phaseProgress * 3); // Header reveals in first third
+    const subtextProgress = Math.max(0, Math.min(1, (phaseProgress - 0.2) * 2)); // Subtext starts after header
+    
+    return { headerProgress, subtextProgress };
+  };
 
   const getTileTransform = (
     startX: number,
     startY: number,
     index: number
   ) => {
-    const phase2Start = 0.33;
-    const phase3Start = 0.66;
+    const phase2Start = 0.4;
+    const phase3Start = 0.7;
 
     if (scrollProgress < phase2Start) {
       return {
@@ -106,6 +120,15 @@ const ScrollNarrativeSection = () => {
     }
   };
 
+  // Calculate line progress from tiles to center
+  const getLineProgress = () => {
+    const lineStart = 0.25;
+    const lineEnd = 0.55;
+    if (scrollProgress < lineStart) return 0;
+    if (scrollProgress > lineEnd) return 1;
+    return (scrollProgress - lineStart) / (lineEnd - lineStart);
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePosition({
@@ -115,31 +138,65 @@ const ScrollNarrativeSection = () => {
   };
 
   const centralContainerOpacity =
-    scrollProgress < 0.33 ? 0 : scrollProgress < 0.5 ? (scrollProgress - 0.33) / 0.17 : 1;
+    scrollProgress < 0.4 ? 0 : scrollProgress < 0.55 ? (scrollProgress - 0.4) / 0.15 : 1;
 
   const uiLayoutOpacity =
-    scrollProgress < 0.66 ? 0 : (scrollProgress - 0.66) / 0.34;
+    scrollProgress < 0.7 ? 0 : (scrollProgress - 0.7) / 0.3;
+
+  const lineProgress = getLineProgress();
 
   return (
     <section
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: "180vh" }}
+      style={{ height: "220vh" }}
     >
       <div className="sticky top-0 h-screen flex overflow-hidden">
         {/* Left Side - Visual Animation (60%) */}
         <div className="w-[60%] relative flex items-center justify-center">
           <div className="relative w-full h-full flex items-center justify-center">
+            
+            {/* SVG Lines from tiles to center */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 5 }}>
+              {departmentTiles.map((tile, index) => {
+                const transform = getTileTransform(tile.startX, tile.startY, index);
+                const centerX = window.innerWidth * 0.3;
+                const centerY = window.innerHeight * 0.5;
+                const tileX = centerX + transform.x;
+                const tileY = centerY + transform.y;
+                
+                // Calculate line endpoint based on progress
+                const endX = tileX + (centerX - tileX) * lineProgress;
+                const endY = tileY + (centerY - tileY) * lineProgress;
+                
+                return (
+                  <line
+                    key={`line-${index}`}
+                    x1={tileX}
+                    y1={tileY}
+                    x2={endX}
+                    y2={endY}
+                    stroke={tile.color}
+                    strokeWidth="2"
+                    strokeOpacity={lineProgress > 0 ? 0.6 : 0}
+                    strokeDasharray="6 4"
+                    className="transition-all duration-700"
+                  />
+                );
+              })}
+            </svg>
+
             {/* Department Tiles */}
             {departmentTiles.map((tile, index) => {
               const transform = getTileTransform(tile.startX, tile.startY, index);
               return (
                 <div
                   key={index}
-                  className="absolute flex flex-col items-center gap-3 transition-all duration-500 ease-out"
+                  className="absolute flex flex-col items-center gap-3 transition-all duration-700 ease-out"
                   style={{
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     opacity: transform.opacity,
+                    zIndex: 10,
                   }}
                 >
                   {/* Person Circle with Face */}
@@ -224,12 +281,13 @@ const ScrollNarrativeSection = () => {
 
             {/* Central Unified System Container */}
             <div
-              className="absolute rounded-2xl border-2 border-border/50 overflow-hidden transition-all duration-700 flex items-center justify-center"
+              className="absolute rounded-2xl border-2 border-border/50 overflow-hidden transition-all duration-1000 flex items-center justify-center"
               style={{
-                width: scrollProgress > 0.66 ? "420px" : "280px",
-                height: scrollProgress > 0.66 ? "340px" : "160px",
+                width: scrollProgress > 0.7 ? "420px" : "280px",
+                height: scrollProgress > 0.7 ? "340px" : "160px",
                 opacity: centralContainerOpacity,
                 transform: `scale(${centralContainerOpacity > 0 ? 1 : 0.8})`,
+                zIndex: 20,
               }}
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
@@ -237,9 +295,9 @@ const ScrollNarrativeSection = () => {
             >
               {/* Fluid Background - shows in phase 2 */}
               <div
-                className="absolute inset-0 transition-opacity duration-500"
+                className="absolute inset-0 transition-opacity duration-700"
                 style={{
-                  opacity: scrollProgress > 0.33 && scrollProgress < 0.75 ? 1 : 0,
+                  opacity: scrollProgress > 0.4 && scrollProgress < 0.78 ? 1 : 0,
                 }}
               >
                 <FluidBackground mousePosition={mousePosition} isHovered={isHovered} />
@@ -247,9 +305,9 @@ const ScrollNarrativeSection = () => {
 
               {/* "A Unified System" label */}
               <span
-                className="relative z-10 text-xl font-semibold text-white transition-opacity duration-500 drop-shadow-lg"
+                className="relative z-10 text-xl font-semibold text-white transition-opacity duration-700 drop-shadow-lg"
                 style={{
-                  opacity: scrollProgress > 0.4 && scrollProgress < 0.72 ? 1 : 0,
+                  opacity: scrollProgress > 0.45 && scrollProgress < 0.75 ? 1 : 0,
                 }}
               >
                 A Unified System
@@ -257,7 +315,7 @@ const ScrollNarrativeSection = () => {
 
               {/* Abstract UI Layout - Phase 3 */}
               <div
-                className="absolute inset-0 transition-opacity duration-500 bg-background"
+                className="absolute inset-0 transition-opacity duration-700 bg-background"
                 style={{ opacity: uiLayoutOpacity }}
               >
                 <div className="w-full h-full flex rounded-lg overflow-hidden border border-border/40">
@@ -274,7 +332,7 @@ const ScrollNarrativeSection = () => {
                         style={{
                           opacity: uiLayoutOpacity,
                           transform: `translateX(${(1 - uiLayoutOpacity) * -15}px)`,
-                          transitionDelay: `${i * 40}ms`,
+                          transitionDelay: `${i * 60}ms`,
                         }}
                       >
                         {item}
@@ -315,24 +373,39 @@ const ScrollNarrativeSection = () => {
         {/* Right Side - Text Content (40%) */}
         <div className="w-[40%] flex items-center justify-center px-12 lg:px-16">
           <div className="max-w-md relative">
-            {phases.map((phase, index) => (
-              <div
-                key={index}
-                className={`transition-all duration-500 ${currentPhase === index ? '' : 'absolute top-0 left-0'}`}
-                style={{
-                  opacity: currentPhase === index ? 1 : 0,
-                  transform: `translateY(${currentPhase === index ? 0 : 20}px)`,
-                  pointerEvents: currentPhase === index ? "auto" : "none",
-                }}
-              >
-                <h3 className="text-2xl lg:text-3xl font-semibold leading-tight mb-6 text-foreground">
-                  {phase.header}
-                </h3>
-                <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
-                  {phase.subtext}
-                </p>
-              </div>
-            ))}
+            {phases.map((phase, index) => {
+              const { headerProgress, subtextProgress } = getTextRevealProgress(index);
+              return (
+                <div
+                  key={index}
+                  className={`transition-all duration-700 ${currentPhase === index ? '' : 'absolute top-0 left-0'}`}
+                  style={{
+                    opacity: currentPhase === index ? 1 : 0,
+                    transform: `translateY(${currentPhase === index ? 0 : 30}px)`,
+                    pointerEvents: currentPhase === index ? "auto" : "none",
+                  }}
+                >
+                  <h3 
+                    className="text-2xl lg:text-3xl font-semibold leading-tight mb-6 text-foreground transition-all duration-700"
+                    style={{
+                      opacity: headerProgress,
+                      transform: `translateY(${(1 - headerProgress) * 20}px)`,
+                    }}
+                  >
+                    {phase.header}
+                  </h3>
+                  <p 
+                    className="text-base lg:text-lg text-muted-foreground leading-relaxed transition-all duration-700"
+                    style={{
+                      opacity: subtextProgress,
+                      transform: `translateY(${(1 - subtextProgress) * 15}px)`,
+                    }}
+                  >
+                    {phase.subtext}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
