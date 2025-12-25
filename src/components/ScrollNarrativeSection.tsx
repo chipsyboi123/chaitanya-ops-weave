@@ -3,7 +3,7 @@ import FluidBackground from "./FluidBackground";
 
 interface ScrollPhase {
   header: string;
-  subtext: string;
+  subtext: React.ReactNode;
 }
 
 const phases: ScrollPhase[] = [
@@ -14,8 +14,11 @@ const phases: ScrollPhase[] = [
   },
   {
     header: "A unified system that fits the way you already work.",
-    subtext:
-      "Instead of adding another tool, we bring existing workflows together into one connected structure — designed around how your firm already operates.",
+    subtext: (
+      <>
+        Instead of adding another tool, we bring <strong className="font-semibold text-foreground">existing workflows</strong> together into one connected structure — designed around how your firm already operates.
+      </>
+    ),
   },
   {
     header: "See your firm's work — clearly, in one place.",
@@ -69,18 +72,18 @@ const ScrollNarrativeSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const currentPhase = scrollProgress < 0.4 ? 0 : scrollProgress < 0.7 ? 1 : 2;
+  const currentPhase = scrollProgress < 0.35 ? 0 : scrollProgress < 0.65 ? 1 : 2;
 
-  // Calculate text reveal progress within each phase
+  // Calculate text reveal progress within each phase - slower, more gradual
   const getTextRevealProgress = (phaseIndex: number) => {
-    const phaseStarts = [0, 0.4, 0.7];
-    const phaseDurations = [0.4, 0.3, 0.3];
+    const phaseStarts = [0, 0.35, 0.65];
+    const phaseDurations = [0.35, 0.3, 0.35];
     
     if (currentPhase !== phaseIndex) return { headerProgress: 0, subtextProgress: 0 };
     
     const phaseProgress = (scrollProgress - phaseStarts[phaseIndex]) / phaseDurations[phaseIndex];
-    const headerProgress = Math.min(1, phaseProgress * 3); // Header reveals in first third
-    const subtextProgress = Math.max(0, Math.min(1, (phaseProgress - 0.2) * 2)); // Subtext starts after header
+    const headerProgress = Math.min(1, phaseProgress * 2.5); // Header reveals more gradually
+    const subtextProgress = Math.max(0, Math.min(1, (phaseProgress - 0.15) * 1.5)); // Subtext reveals slower
     
     return { headerProgress, subtextProgress };
   };
@@ -90,8 +93,8 @@ const ScrollNarrativeSection = () => {
     startY: number,
     index: number
   ) => {
-    const phase2Start = 0.4;
-    const phase3Start = 0.7;
+    const phase2Start = 0.35;
+    const phase3Start = 0.65;
 
     if (scrollProgress < phase2Start) {
       return {
@@ -138,10 +141,10 @@ const ScrollNarrativeSection = () => {
   };
 
   const centralContainerOpacity =
-    scrollProgress < 0.4 ? 0 : scrollProgress < 0.55 ? (scrollProgress - 0.4) / 0.15 : 1;
+    scrollProgress < 0.35 ? 0 : scrollProgress < 0.5 ? (scrollProgress - 0.35) / 0.15 : 1;
 
   const uiLayoutOpacity =
-    scrollProgress < 0.7 ? 0 : (scrollProgress - 0.7) / 0.3;
+    scrollProgress < 0.65 ? 0 : (scrollProgress - 0.65) / 0.35;
 
   const lineProgress = getLineProgress();
 
@@ -149,7 +152,7 @@ const ScrollNarrativeSection = () => {
     <section
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: "220vh" }}
+      style={{ height: "280vh" }}
     >
       <div className="sticky top-0 h-screen flex overflow-hidden">
         {/* Left Side - Visual Animation (60%) */}
@@ -283,8 +286,8 @@ const ScrollNarrativeSection = () => {
             <div
               className="absolute transition-all duration-1000 z-30"
               style={{
-                opacity: scrollProgress > 0.45 ? 1 : 0,
-                transform: `translateY(${scrollProgress > 0.7 ? -200 : 0}px)`,
+                opacity: scrollProgress > 0.4 ? 1 : 0,
+                transform: `translateY(${scrollProgress > 0.65 ? -200 : 0}px)`,
               }}
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
@@ -374,7 +377,7 @@ const ScrollNarrativeSection = () => {
         </div>
 
         {/* Vertical Divider Line */}
-        <div className="w-px bg-border/50 self-stretch my-16" />
+        <div className="w-px bg-[#171839] self-stretch my-16" />
 
         {/* Right Side - Text Content (40%) */}
         <div className="w-[40%] flex items-center justify-center px-12 lg:px-16">
