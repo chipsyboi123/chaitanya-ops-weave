@@ -13,6 +13,7 @@ import CaseStudyDetail from "./pages/CaseStudyDetail";
 import Writing from "./pages/Writing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import RoughWork from "./pages/RoughWork";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/writing/:id" element={<Writing />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/rough-work" element={<RoughWork />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>
