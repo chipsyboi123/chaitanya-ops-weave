@@ -128,7 +128,7 @@ const ScrollNarrativeSection = () => {
     >
       <div className="sticky top-0 h-screen flex overflow-hidden">
         {/* Left Side - Visual Animation (60%) */}
-        <div className="w-[60%] relative flex items-center justify-center border-r border-border/30">
+        <div className="w-[60%] relative flex items-center justify-center">
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Department Tiles */}
             {departmentTiles.map((tile, index) => {
@@ -309,13 +309,16 @@ const ScrollNarrativeSection = () => {
           </div>
         </div>
 
+        {/* Vertical Divider Line */}
+        <div className="w-px bg-border/50 self-stretch my-16" />
+
         {/* Right Side - Text Content (40%) */}
-        <div className="w-[40%] flex items-center px-12 lg:px-16">
-          <div className="max-w-md">
+        <div className="w-[40%] flex items-center justify-center px-12 lg:px-16">
+          <div className="max-w-md relative">
             {phases.map((phase, index) => (
               <div
                 key={index}
-                className="absolute transition-all duration-500 max-w-md"
+                className={`transition-all duration-500 ${currentPhase === index ? '' : 'absolute top-0 left-0'}`}
                 style={{
                   opacity: currentPhase === index ? 1 : 0,
                   transform: `translateY(${currentPhase === index ? 0 : 20}px)`,
