@@ -34,7 +34,7 @@ const Home = () => {
             <div className="mb-8 opacity-0 animate-fade-in" style={{
             animationDelay: "0.35s"
           }}>
-              <RotatingText prefix="We enable" phrases={rotatingPhrases} />
+              <RotatingText prefix="We enable" phrases={rotatingPhrases} interval={2900} />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{
