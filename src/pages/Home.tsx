@@ -4,6 +4,7 @@ import SectionContainer from "@/components/SectionContainer";
 import TrustStrip from "@/components/TrustStrip";
 import RotatingText from "@/components/RotatingText";
 import ScrollNarrativeSection from "@/components/ScrollNarrativeSection";
+import ApproachSection from "@/components/ApproachSection";
 import { ArrowRight } from "lucide-react";
 const Home = () => {
   const trustStatements = ["Designed for regulated workflows", "Discretion-first delivery", "Automation over headcount", "Systems that compound over time"];
@@ -59,6 +60,9 @@ const Home = () => {
 
       {/* SCROLL-BASED NARRATIVE SECTION */}
       <ScrollNarrativeSection />
+
+      {/* OUR APPROACH SECTION */}
+      <ApproachSection />
 
       {/* FINAL CTA */}
       <SectionContainer>
