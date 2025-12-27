@@ -316,11 +316,14 @@ const ScrollNarrativeSection = () => {
             </div>
           </div>
 
-          {/* Horizontal Divider */}
-          <div className="h-px bg-[#2a2f4a] mx-8" />
+          {/* Horizontal Divider - Subtle */}
+          <div className="h-px bg-border/30 mx-6" />
 
-          {/* Bottom - Text Content (55%) */}
-          <div className="h-[55%] flex items-start justify-center px-6 pt-6 pb-4 overflow-hidden">
+          {/* Bottom - Text Content (55%) with subtle narrative background */}
+          <div 
+            className="h-[55%] flex items-start justify-center px-8 pt-8 pb-4 overflow-hidden"
+            style={{ backgroundColor: 'hsl(260 20% 98.5%)' }}
+          >
             <div className="max-w-sm relative">
               {phases.map((phase, index) => {
                 const { headerProgress, wordsVisible } = getTextRevealProgress(index, phase.subtextWords.length);
@@ -335,7 +338,7 @@ const ScrollNarrativeSection = () => {
                     }}
                   >
                     <h3 
-                      className="text-xl font-semibold leading-tight mb-4 text-foreground tracking-tight transition-all duration-500"
+                      className="text-xl font-semibold leading-tight mb-5 text-foreground tracking-tight transition-all duration-500"
                       style={{
                         opacity: headerProgress,
                         transform: `translateY(${(1 - headerProgress) * 15}px)`,
@@ -343,16 +346,16 @@ const ScrollNarrativeSection = () => {
                     >
                       {phase.header}
                     </h3>
-                    <p className="text-sm leading-relaxed">
+                    <p className="text-sm leading-[1.75] tracking-[0.01em]">
                       {phase.subtextWords.map((word, wordIndex) => {
                         const isVisible = wordIndex < wordsVisible;
                         const isBold = phase.boldWords?.includes(word.replace(/[^a-zA-Z]/g, ''));
                         return (
                           <span
                             key={wordIndex}
-                            className={`inline-block transition-all duration-300 mr-1 ${isBold ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+                            className={`inline-block transition-all duration-300 mr-1 ${isBold ? 'font-medium text-foreground/90' : 'text-muted-foreground/80'}`}
                             style={{
-                              opacity: isVisible ? 1 : 0.25,
+                              opacity: isVisible ? 1 : 0.2,
                               transform: `translateY(${isVisible ? 0 : 4}px)`,
                             }}
                           >
@@ -364,7 +367,7 @@ const ScrollNarrativeSection = () => {
                     {/* CTA Button - only show on final phase when text is fully revealed */}
                     {index === 2 && (
                       <button
-                        className="mt-6 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg transition-all duration-500 hover:opacity-90"
+                        className="mt-7 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg transition-all duration-500 hover:opacity-90"
                         style={{
                           opacity: wordsVisible >= phase.subtextWords.length ? 1 : 0,
                           transform: `translateY(${wordsVisible >= phase.subtextWords.length ? 0 : 10}px)`,
@@ -565,11 +568,14 @@ const ScrollNarrativeSection = () => {
           </div>
         </div>
 
-        {/* Vertical Divider Line - Better contrast */}
-        <div className="w-px bg-[#2a2f4a] self-stretch my-16" />
+        {/* Vertical Divider Line - Subtle, secondary */}
+        <div className="w-px bg-border/30 self-stretch my-20" />
 
-        {/* Right Side - Text Content (40%) */}
-        <div className="w-[40%] flex items-center justify-center px-12 lg:px-16">
+        {/* Right Side - Text Content (40%) with subtle narrative background */}
+        <div 
+          className="w-[40%] flex items-center justify-center px-14 lg:px-20"
+          style={{ backgroundColor: 'hsl(260 20% 98.5%)' }}
+        >
           <div className="max-w-md relative">
             {phases.map((phase, index) => {
               const { headerProgress, wordsVisible } = getTextRevealProgress(index, phase.subtextWords.length);
@@ -583,9 +589,9 @@ const ScrollNarrativeSection = () => {
                     pointerEvents: currentPhase === index ? "auto" : "none",
                   }}
                 >
-                  {/* Larger headers with tighter letter-spacing */}
+                  {/* Headline - Clear hierarchy, premium weight */}
                   <h3 
-                    className="text-3xl lg:text-4xl font-semibold leading-tight mb-6 text-foreground tracking-tight transition-all duration-500"
+                    className="text-3xl lg:text-[2.25rem] font-semibold leading-[1.2] mb-8 text-foreground tracking-tight transition-all duration-500"
                     style={{
                       opacity: headerProgress,
                       transform: `translateY(${(1 - headerProgress) * 20}px)`,
@@ -593,17 +599,17 @@ const ScrollNarrativeSection = () => {
                   >
                     {phase.header}
                   </h3>
-                  {/* Improved line height and word reveal with upward motion */}
-                  <p className="text-base lg:text-lg leading-loose">
+                  {/* Body text - Lighter, secondary, refined rhythm */}
+                  <p className="text-base lg:text-[1.0625rem] leading-[1.8] tracking-[0.01em]">
                     {phase.subtextWords.map((word, wordIndex) => {
                       const isVisible = wordIndex < wordsVisible;
                       const isBold = phase.boldWords?.includes(word.replace(/[^a-zA-Z]/g, ''));
                       return (
                         <span
                           key={wordIndex}
-                          className={`inline-block transition-all duration-300 mr-1 ${isBold ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+                          className={`inline-block transition-all duration-300 mr-1.5 ${isBold ? 'font-medium text-foreground/90' : 'text-muted-foreground/80'}`}
                           style={{
-                            opacity: isVisible ? 1 : 0.25,
+                            opacity: isVisible ? 1 : 0.2,
                             transform: `translateY(${isVisible ? 0 : 6}px)`,
                           }}
                         >
@@ -615,7 +621,7 @@ const ScrollNarrativeSection = () => {
                   {/* CTA Button - only show on final phase when text is fully revealed */}
                   {index === 2 && (
                     <button
-                      className="mt-8 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg transition-all duration-500 hover:opacity-90"
+                      className="mt-10 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg transition-all duration-500 hover:opacity-90"
                       style={{
                         opacity: wordsVisible >= phase.subtextWords.length ? 1 : 0,
                         transform: `translateY(${wordsVisible >= phase.subtextWords.length ? 0 : 10}px)`,
