@@ -15,9 +15,8 @@ const Home = () => {
           <div className="max-w-3xl">
             <h1 style={{
             animationDelay: "0.2s"
-          }} className="text-[48px] md:text-[64px] lg:text-[72px] font-semibold tracking-tight leading-[1.1] mb-6 opacity-0 animate-fade-in">
-              Building Scalable Systems for Modern Wealth Firms.
-            </h1>
+          }} className="text-[48px] md:text-[64px] lg:text-[72px] font-semibold tracking-tight leading-[1.1] mb-6 opacity-0 animate-fade-in">Building scalable systems
+for how wealth firms actually work.</h1>
 
             <p className="text-lg text-muted-foreground leading-relaxed mb-6 opacity-0 animate-fade-in" style={{
             animationDelay: "0.3s"
