@@ -22,7 +22,7 @@ const Home = () => {
 
             <p className="text-lg text-muted-foreground leading-relaxed mb-6 opacity-0 animate-fade-in" style={{
             animationDelay: "0.3s"
-          }}>We replace manual operations with automation across portfolio reporting, RM workflows, compliance knowledge, and client experience—so teams move faster and clients feel the difference.</p>
+          }}>Creating technology that brings clarity, control, and scale to wealth firms.</p>
 
             <div className="mb-8 opacity-0 animate-fade-in" style={{
             animationDelay: "0.35s"
