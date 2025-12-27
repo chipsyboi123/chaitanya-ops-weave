@@ -57,11 +57,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 pt-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-8 pt-4">
         {/* Navbar with fluid gradient background */}
         <div 
           ref={navContainerRef}
-          className={`relative mx-auto max-w-[1200px] rounded-2xl transition-all duration-300 overflow-hidden ${
+          className={`relative w-full rounded-2xl transition-all duration-300 overflow-hidden ${
             scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
           onMouseMove={handleMouseMove}
@@ -177,7 +177,7 @@ const Navbar = () => {
         onMouseEnter={() => setSolutionsOpen(true)}
         onMouseLeave={() => setSolutionsOpen(false)}
       >
-        <div className="relative mx-auto max-w-[1200px] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+        <div className="relative w-full rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
           {/* Gradient background layer for mega menu */}
           <div 
             className="absolute inset-0"
