@@ -7,7 +7,14 @@ import ScrollNarrativeSection from "@/components/ScrollNarrativeSection";
 import { ArrowRight } from "lucide-react";
 const Home = () => {
   const trustStatements = ["Designed for regulated workflows", "Discretion-first delivery", "Automation over headcount", "Systems that compound over time"];
-  const rotatingPhrases = ["Advisors to communicate seamlessly.", "Operations teams to close loops faster.", "Research to surface insights instantly.", "Compliance to be searchable and auditable."];
+  const rotatingPhrases = [
+    "compliance to be searchable and audit-ready.",
+    "client context to be preserved across teams and over time.",
+    "advisors to communicate with clarity and consistency.",
+    "research to surface insights when they're actually needed.",
+    "teams to close loops faster — without adding headcount.",
+    "leaders to gain visibility into how work gets done."
+  ];
   return <div className="min-h-screen relative">
       {/* HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center pt-20 lg:pt-24">
