@@ -178,12 +178,21 @@ const ScrollNarrativeSection = () => {
   };
 
   // Calculate line progress from tiles to center
+  // Lines are now always visible (start at 1) and animate during convergence
   const getLineProgress = () => {
     const lineStart = 0.28;
     const lineEnd = 0.60;
-    if (scrollProgress < lineStart) return 0;
+    if (scrollProgress < lineStart) return 0; // Lines drawn but nodes not yet converging
     if (scrollProgress > lineEnd) return 1;
     return (scrollProgress - lineStart) / (lineEnd - lineStart);
+  };
+  
+  // Initial lines visibility - always visible from start
+  const getInitialLineOpacity = () => {
+    // Fade out as nodes converge and unified label appears
+    if (scrollProgress < 0.33) return 0.5;
+    if (scrollProgress < 0.50) return 0.5 - ((scrollProgress - 0.33) / 0.17) * 0.3;
+    return 0.2;
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -219,7 +228,7 @@ const ScrollNarrativeSection = () => {
           {/* Top - Visual Animation (50%) */}
           <div className="h-[45%] relative flex items-center justify-center">
             <div className="relative w-full h-full flex items-center justify-center scale-75">
-              {/* SVG Lines from tiles to center */}
+              {/* SVG Lines from tiles to center - always visible */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 5 }}>
                 {departmentTiles.map((tile, index) => {
                   const transform = getTileTransform(tile.startX, tile.startY, index);
@@ -228,21 +237,26 @@ const ScrollNarrativeSection = () => {
                   const tileX = centerX + transform.x;
                   const tileY = centerY + transform.y;
                   
-                  const endX = tileX + (centerX - tileX) * lineProgress;
-                  const endY = tileY + (centerY - tileY) * lineProgress;
+                  // Calculate dynamic line end based on convergence progress
+                  const dynamicEndX = lineProgress > 0 
+                    ? tileX + (centerX - tileX) * lineProgress 
+                    : centerX;
+                  const dynamicEndY = lineProgress > 0 
+                    ? tileY + (centerY - tileY) * lineProgress 
+                    : centerY;
                   
                   return (
                     <line
                       key={`line-${index}`}
                       x1={tileX}
                       y1={tileY}
-                      x2={endX}
-                      y2={endY}
+                      x2={dynamicEndX}
+                      y2={dynamicEndY}
                       stroke={ROLE_NODE_COLOR}
-                      strokeWidth="2.5"
-                      strokeOpacity={lineProgress > 0 ? 0.7 : 0}
-                      strokeDasharray="5 3"
-                      className="transition-all duration-700"
+                      strokeWidth="2"
+                      strokeOpacity={getInitialLineOpacity()}
+                      strokeDasharray="4 3"
+                      className="transition-all duration-500"
                     />
                   );
                 })}
@@ -381,7 +395,7 @@ const ScrollNarrativeSection = () => {
         <div className="w-[60%] relative flex items-center justify-center">
           <div className="relative w-full h-full flex items-center justify-center">
             
-            {/* SVG Lines from tiles to center - thicker and more visible */}
+            {/* SVG Lines from tiles to center - always visible from start */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 5 }}>
               {departmentTiles.map((tile, index) => {
                 const transform = getTileTransform(tile.startX, tile.startY, index);
@@ -390,21 +404,26 @@ const ScrollNarrativeSection = () => {
                 const tileX = centerX + transform.x;
                 const tileY = centerY + transform.y;
                 
-                const endX = tileX + (centerX - tileX) * lineProgress;
-                const endY = tileY + (centerY - tileY) * lineProgress;
+                // Calculate dynamic line end based on convergence progress
+                const dynamicEndX = lineProgress > 0 
+                  ? tileX + (centerX - tileX) * lineProgress 
+                  : centerX;
+                const dynamicEndY = lineProgress > 0 
+                  ? tileY + (centerY - tileY) * lineProgress 
+                  : centerY;
                 
                 return (
                   <line
                     key={`line-${index}`}
                     x1={tileX}
                     y1={tileY}
-                    x2={endX}
-                    y2={endY}
+                    x2={dynamicEndX}
+                    y2={dynamicEndY}
                     stroke={ROLE_NODE_COLOR}
-                    strokeWidth="2.5"
-                    strokeOpacity={lineProgress > 0 ? 0.7 : 0}
-                    strokeDasharray="5 3"
-                    className="transition-all duration-700"
+                    strokeWidth="2"
+                    strokeOpacity={getInitialLineOpacity()}
+                    strokeDasharray="4 3"
+                    className="transition-all duration-500"
                   />
                 );
               })}
