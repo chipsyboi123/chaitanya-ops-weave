@@ -3,117 +3,44 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ApproachStep {
   number: string;
-  title: string;
-  description: string;
+  header: string;
+  subtext: string;
 }
 
 const approachSteps: ApproachStep[] = [
   {
     number: "01",
-    title: "Understand constraints before proposing change",
-    description: "We begin by understanding regulatory boundaries, team structures, and existing tools — before suggesting any system changes.",
+    header: "Understanding how your firm already works.",
+    subtext: "Every wealth firm has constraints — regulatory, operational, and human. Before we design anything, we study how work actually flows across teams, tools, and responsibilities.",
   },
   {
     number: "02",
-    title: "Design around existing behavior",
-    description: "Systems are shaped around how people already work — not how tools expect them to work.",
+    header: "Designing around behavior, not idealized workflows.",
+    subtext: "Instead of forcing change, we map real processes and decision paths. The system is shaped around how your teams already operate — not how software expects them to.",
   },
   {
     number: "03",
-    title: "Introduce automation selectively",
-    description: "Automation is applied only where it reduces effort without reducing control.",
+    header: "Introducing automation — selectively.",
+    subtext: "Automation is applied only where it reduces friction or risk. We avoid blanket automation in favor of deliberate, high-leverage improvements.",
   },
   {
     number: "04",
-    title: "Build for continuity and scale",
-    description: "We design systems that preserve context and continue to add value as teams, clients, and complexity grow.",
+    header: "Building systems that scale with clarity.",
+    subtext: "As your firm grows, the system compounds — preserving context, ownership, and control without increasing headcount.",
   },
 ];
 
-// Multi-layer system architecture
+// Layer definitions for the system canvas
 const systemLayers = [
-  { id: "workflow", label: "Workflows", y: 25, opacity: 0.12 },
-  { id: "knowledge", label: "Knowledge", y: 45, opacity: 0.10 },
-  { id: "context", label: "Context", y: 65, opacity: 0.08 },
-  { id: "activity", label: "Activity", y: 85, opacity: 0.06 },
-];
-
-// Core system nodes - structured and calm
-const systemNodes = [
-  { id: "core", x: 50, y: 50, size: 3, layer: "all" },
-  // Workflow layer nodes
-  { id: "w1", x: 22, y: 28, size: 1.8, layer: "workflow" },
-  { id: "w2", x: 42, y: 22, size: 1.5, layer: "workflow" },
-  { id: "w3", x: 58, y: 24, size: 1.6, layer: "workflow" },
-  { id: "w4", x: 78, y: 26, size: 1.7, layer: "workflow" },
-  // Knowledge layer nodes
-  { id: "k1", x: 18, y: 44, size: 1.4, layer: "knowledge" },
-  { id: "k2", x: 35, y: 48, size: 1.6, layer: "knowledge" },
-  { id: "k3", x: 65, y: 46, size: 1.5, layer: "knowledge" },
-  { id: "k4", x: 82, y: 42, size: 1.4, layer: "knowledge" },
-  // Context layer nodes
-  { id: "c1", x: 24, y: 64, size: 1.5, layer: "context" },
-  { id: "c2", x: 45, y: 68, size: 1.7, layer: "context" },
-  { id: "c3", x: 55, y: 62, size: 1.4, layer: "context" },
-  { id: "c4", x: 76, y: 66, size: 1.6, layer: "context" },
-  // Activity layer nodes
-  { id: "a1", x: 20, y: 82, size: 1.3, layer: "activity" },
-  { id: "a2", x: 38, y: 86, size: 1.5, layer: "activity" },
-  { id: "a3", x: 62, y: 84, size: 1.4, layer: "activity" },
-  { id: "a4", x: 80, y: 88, size: 1.3, layer: "activity" },
-];
-
-// Connection paths between nodes
-const systemConnections = [
-  // Core connections
-  { from: "core", to: "w2", type: "primary" },
-  { from: "core", to: "w3", type: "primary" },
-  { from: "core", to: "k2", type: "primary" },
-  { from: "core", to: "k3", type: "primary" },
-  { from: "core", to: "c2", type: "secondary" },
-  { from: "core", to: "c3", type: "secondary" },
-  // Workflow layer
-  { from: "w1", to: "w2", type: "layer" },
-  { from: "w2", to: "w3", type: "layer" },
-  { from: "w3", to: "w4", type: "layer" },
-  // Knowledge layer  
-  { from: "k1", to: "k2", type: "layer" },
-  { from: "k2", to: "k3", type: "layer" },
-  { from: "k3", to: "k4", type: "layer" },
-  // Context layer
-  { from: "c1", to: "c2", type: "layer" },
-  { from: "c2", to: "c3", type: "layer" },
-  { from: "c3", to: "c4", type: "layer" },
-  // Activity layer
-  { from: "a1", to: "a2", type: "layer" },
-  { from: "a2", to: "a3", type: "layer" },
-  { from: "a3", to: "a4", type: "layer" },
-  // Cross-layer connections
-  { from: "w1", to: "k1", type: "cross" },
-  { from: "w4", to: "k4", type: "cross" },
-  { from: "k1", to: "c1", type: "cross" },
-  { from: "k4", to: "c4", type: "cross" },
-  { from: "c1", to: "a1", type: "cross" },
-  { from: "c4", to: "a4", type: "cross" },
-  // Repetitive loops (for automation step)
-  { from: "w2", to: "k2", type: "repetitive" },
-  { from: "k2", to: "c2", type: "repetitive" },
-  { from: "w3", to: "k3", type: "repetitive" },
-  { from: "k3", to: "c3", type: "repetitive" },
-];
-
-// Constraint markers that appear in step 1
-const constraintMarkers = [
-  { x: 12, y: 36, label: "Compliance", width: 22 },
-  { x: 88, y: 44, label: "Existing Tools", width: 26 },
-  { x: 12, y: 72, label: "Team Ownership", width: 28 },
-  { x: 88, y: 78, label: "Regulatory", width: 22 },
+  { id: "compliance", label: "Compliance", y: 20 },
+  { id: "client", label: "Client Context", y: 40 },
+  { id: "workflows", label: "Workflows", y: 60 },
+  { id: "knowledge", label: "Knowledge", y: 80 },
 ];
 
 const ApproachSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [scanLinePosition, setScanLinePosition] = useState(0);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -137,16 +64,6 @@ const ApproachSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Animate scan lines for step 1
-  useEffect(() => {
-    if (scrollProgress >= 0.05 && scrollProgress < 0.25) {
-      const interval = setInterval(() => {
-        setScanLinePosition(prev => (prev + 1) % 100);
-      }, 80);
-      return () => clearInterval(interval);
-    }
-  }, [scrollProgress]);
-
   // Determine which step is active based on scroll progress
   const getActiveStep = () => {
     if (scrollProgress < 0.25) return 0;
@@ -157,24 +74,21 @@ const ApproachSection = () => {
 
   const activeStep = getActiveStep();
 
-  // Get node position by ID
-  const getNodeById = (id: string) => systemNodes.find(n => n.id === id);
-
   // Calculate animation states for each step
   const getStepAnimationState = () => {
-    // Step 1: Instrumentation & Observation (0-25%)
+    // Step 1: Observe constraints (0-25%)
     const step1Progress = scrollProgress < 0.05 ? 0 : 
       scrollProgress < 0.25 ? Math.min(1, (scrollProgress - 0.05) / 0.18) : 1;
 
-    // Step 2: Behavioral Adaptation (25-50%)
+    // Step 2: Shape around behavior (25-50%)
     const step2Progress = scrollProgress < 0.25 ? 0 :
       scrollProgress < 0.50 ? (scrollProgress - 0.25) / 0.25 : 1;
 
-    // Step 3: Selective Automation (50-75%)
+    // Step 3: Apply automation selectively (50-75%)
     const step3Progress = scrollProgress < 0.50 ? 0 :
       scrollProgress < 0.75 ? (scrollProgress - 0.50) / 0.25 : 1;
 
-    // Step 4: Continuity & Scale (75-100%)
+    // Step 4: Lock in clarity (75-100%)
     const step4Progress = scrollProgress < 0.75 ? 0 :
       (scrollProgress - 0.75) / 0.25;
 
@@ -183,20 +97,8 @@ const ApproachSection = () => {
 
   const { step1Progress, step2Progress, step3Progress, step4Progress } = getStepAnimationState();
 
-  // Calculate path adjustments for step 2 (behavioral adaptation)
-  const getPathAdjustment = (index: number) => {
-    const baseAdjust = step2Progress * 2;
-    const xAdjust = (index % 3 === 0 ? 1 : index % 3 === 1 ? -0.5 : 0.3) * baseAdjust;
-    const yAdjust = (index % 2 === 0 ? 0.5 : -0.3) * baseAdjust;
-    return { xAdjust, yAdjust };
-  };
-
-  // Calculate line thickness for step 2 (high-frequency paths thicken)
-  const getLineThickness = (conn: typeof systemConnections[0], index: number) => {
-    const base = conn.type === "primary" ? 0.5 : conn.type === "layer" ? 0.35 : 0.25;
-    const frequencyMultiplier = index % 4 === 0 ? 1.5 : index % 3 === 0 ? 0.7 : 1;
-    return base * (1 + step2Progress * (frequencyMultiplier - 1) * 0.5);
-  };
+  // Scan line position for step 1
+  const scanLineX = step1Progress * 100;
 
   // Mobile layout
   if (isMobile) {
@@ -207,108 +109,140 @@ const ApproachSection = () => {
         style={{ height: "400vh" }}
       >
         <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-          {/* Top - System Diagram (45%) */}
-          <div className="h-[45%] relative flex items-center justify-center bg-background overflow-hidden">
-            <svg
-              viewBox="0 0 100 100"
-              className="w-full h-full max-w-[300px] max-h-[300px]"
-              style={{ opacity: 0.9 }}
-            >
-              {/* Layer backgrounds */}
-              {systemLayers.map((layer) => (
-                <rect
-                  key={layer.id}
-                  x="8"
-                  y={layer.y - 8}
-                  width="84"
-                  height="16"
-                  rx="2"
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={layer.opacity * (0.6 + step4Progress * 0.4)}
-                  className="transition-all duration-1000"
-                />
-              ))}
+          {/* Top - Layered System Canvas (45%) */}
+          <div className="h-[45%] relative flex items-center justify-center bg-background overflow-hidden p-4">
+            <div className="w-full max-w-[320px] h-full max-h-[280px] relative">
+              {/* Main container frame */}
+              <div 
+                className="absolute inset-0 rounded-2xl transition-all duration-1000"
+                style={{
+                  background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(260 20% 98%) 100%)',
+                  boxShadow: step4Progress > 0.5 
+                    ? '0 0 0 1px hsl(var(--border)/0.3)' 
+                    : 'none',
+                }}
+              >
+                {/* Horizontal layers */}
+                {systemLayers.map((layer, index) => {
+                  // Layer highlight during step 1 (sequential)
+                  const layerHighlightDelay = index * 0.2;
+                  const layerHighlight = step1Progress > layerHighlightDelay 
+                    ? Math.min(1, (step1Progress - layerHighlightDelay) / 0.3) 
+                    : 0;
+                  
+                  // Step 2: Directional gradients appear
+                  const gradientOpacity = step2Progress * 0.15;
+                  
+                  // Step 4: Even alignment
+                  const alignmentAdjust = step4Progress * 2;
 
-              {/* Connection lines */}
-              {systemConnections.map((conn, index) => {
-                const fromNode = getNodeById(conn.from);
-                const toNode = getNodeById(conn.to);
-                if (!fromNode || !toNode) return null;
+                  return (
+                    <div
+                      key={layer.id}
+                      className="absolute left-4 right-4 h-[18%] rounded-lg transition-all duration-1000"
+                      style={{
+                        top: `${layer.y - 8 + alignmentAdjust * (index % 2 === 0 ? -0.5 : 0.5)}%`,
+                        background: `linear-gradient(90deg, 
+                          hsl(260 30% 96% / ${0.4 + layerHighlight * 0.2}) 0%, 
+                          hsl(260 25% 97% / ${0.3 + gradientOpacity}) 50%,
+                          hsl(260 30% 96% / ${0.4 + layerHighlight * 0.2}) 100%)`,
+                        opacity: 0.5 + step4Progress * 0.3,
+                      }}
+                    >
+                      {/* Layer label */}
+                      <span 
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] tracking-wide text-muted-foreground/40 transition-all duration-700"
+                        style={{
+                          opacity: step4Progress > 0.3 ? 0.6 : 0.3,
+                        }}
+                      >
+                        {layer.label}
+                      </span>
 
-                const { xAdjust, yAdjust } = getPathAdjustment(index);
-                const thickness = getLineThickness(conn, index);
-                const isRepetitive = conn.type === "repetitive";
-                const opacity = isRepetitive && step3Progress > 0.3 
-                  ? 0.15 + (1 - step3Progress) * 0.2 
-                  : conn.type === "cross" ? 0.12 : 0.25;
+                      {/* Step 2: Flow paths within layer */}
+                      {step2Progress > 0 && (
+                        <div 
+                          className="absolute inset-y-2 left-[20%] right-[10%] transition-all duration-1000"
+                          style={{ opacity: step2Progress * 0.4 }}
+                        >
+                          <div 
+                            className="h-px w-full absolute top-1/2 -translate-y-1/2"
+                            style={{
+                              background: `linear-gradient(90deg, 
+                                transparent 0%, 
+                                hsl(260 30% 70% / 0.25) ${20 + index * 10}%, 
+                                hsl(260 30% 70% / 0.4) 50%,
+                                hsl(260 30% 70% / 0.25) ${80 - index * 10}%, 
+                                transparent 100%)`,
+                            }}
+                          />
+                        </div>
+                      )}
 
-                return (
-                  <line
-                    key={`conn-${index}`}
-                    x1={fromNode.x + xAdjust}
-                    y1={fromNode.y + yAdjust}
-                    x2={toNode.x + xAdjust}
-                    y2={toNode.y + yAdjust}
-                    stroke="hsl(var(--foreground))"
-                    strokeWidth={thickness}
-                    strokeOpacity={opacity}
-                    className="transition-all duration-1000"
+                      {/* Step 3: Automation indicator (only on Workflows layer) */}
+                      {layer.id === "workflows" && step3Progress > 0.3 && (
+                        <div 
+                          className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-1.5 transition-all duration-700"
+                          style={{ opacity: step3Progress * 0.7 }}
+                        >
+                          <div className="w-1 h-1 rounded-full bg-foreground/20" />
+                          <div className="w-6 h-px bg-foreground/15" />
+                          <div className="w-1 h-1 rounded-full bg-foreground/30" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                {/* Step 1: Vertical scan line */}
+                {step1Progress > 0 && step1Progress < 1 && (
+                  <div 
+                    className="absolute top-4 bottom-4 w-px transition-all duration-100"
+                    style={{
+                      left: `${4 + scanLineX * 0.92}%`,
+                      background: 'linear-gradient(180deg, transparent 0%, hsl(260 40% 70% / 0.3) 20%, hsl(260 40% 70% / 0.3) 80%, transparent 100%)',
+                      opacity: 0.6,
+                    }}
                   />
-                );
-              })}
+                )}
 
-              {/* System nodes */}
-              {systemNodes.map((node) => (
-                <circle
-                  key={node.id}
-                  cx={node.x}
-                  cy={node.y}
-                  r={node.size}
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={node.id === "core" ? 0.5 : 0.3}
-                  className="transition-all duration-700"
-                />
-              ))}
+                {/* Step 1: Constraint callouts */}
+                {step1Progress > 0.3 && (
+                  <>
+                    <div 
+                      className="absolute -left-2 top-[15%] text-[7px] text-muted-foreground/50 transition-all duration-700"
+                      style={{ opacity: step1Progress * 0.6 }}
+                    >
+                      Regulatory
+                    </div>
+                    <div 
+                      className="absolute -right-2 top-[35%] text-[7px] text-muted-foreground/50 text-right transition-all duration-700"
+                      style={{ opacity: step1Progress * 0.6 }}
+                    >
+                      Existing tools
+                    </div>
+                    <div 
+                      className="absolute -left-2 bottom-[25%] text-[7px] text-muted-foreground/50 transition-all duration-700"
+                      style={{ opacity: step1Progress * 0.6 }}
+                    >
+                      Team ownership
+                    </div>
+                  </>
+                )}
 
-              {/* Constraint markers (step 1) */}
-              {constraintMarkers.slice(0, 3).map((marker, index) => (
-                <g
-                  key={`constraint-${index}`}
-                  style={{
-                    opacity: step1Progress * 0.7,
-                    transition: "opacity 800ms ease-out",
-                  }}
-                >
-                  <rect
-                    x={marker.x - marker.width / 2}
-                    y={marker.y - 2.5}
-                    width={marker.width}
-                    height="5"
-                    rx="1"
-                    fill="none"
-                    stroke="hsl(var(--muted-foreground))"
-                    strokeWidth="0.15"
-                    strokeOpacity="0.5"
-                    strokeDasharray="1 0.5"
+                {/* Step 4: Outer stability frame */}
+                {step4Progress > 0.5 && (
+                  <div 
+                    className="absolute -inset-2 rounded-3xl border border-border/20 transition-all duration-1000"
+                    style={{ opacity: (step4Progress - 0.5) * 0.6 }}
                   />
-                  <text
-                    x={marker.x}
-                    y={marker.y + 1}
-                    textAnchor="middle"
-                    fontSize="1.8"
-                    fill="hsl(var(--muted-foreground))"
-                    fillOpacity="0.6"
-                    style={{ fontFamily: 'system-ui, sans-serif' }}
-                  >
-                    {marker.label}
-                  </text>
-                </g>
-              ))}
-            </svg>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Horizontal Divider */}
-          <div className="h-px bg-border/30 mx-6" />
+          <div className="h-px bg-border/20 mx-6" />
 
           {/* Bottom - Text Content (55%) */}
           <div 
@@ -350,17 +284,17 @@ const ApproachSection = () => {
                             color: isCurrent ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                           }}
                         >
-                          {step.title}
+                          {step.header}
                         </h4>
                         <p 
                           className="text-xs text-muted-foreground/70 leading-relaxed transition-all duration-700"
                           style={{
                             opacity: isCurrent ? 1 : 0,
-                            maxHeight: isCurrent ? '60px' : '0',
+                            maxHeight: isCurrent ? '80px' : '0',
                             overflow: 'hidden',
                           }}
                         >
-                          {step.description}
+                          {step.subtext}
                         </p>
                       </div>
                     </div>
@@ -374,7 +308,7 @@ const ApproachSection = () => {
     );
   }
 
-  // Desktop layout - reversed (text left, diagram right)
+  // Desktop layout
   return (
     <section
       ref={sectionRef}
@@ -391,7 +325,7 @@ const ApproachSection = () => {
             Our approach
           </span>
 
-          <h2 className="text-[2rem] lg:text-[2.25rem] font-semibold leading-[1.15] mb-10 text-foreground tracking-tight">
+          <h2 className="text-[1.875rem] lg:text-[2.125rem] font-semibold leading-[1.15] mb-10 text-foreground tracking-tight">
             How we build systems that actually get used
           </h2>
 
@@ -417,22 +351,22 @@ const ApproachSection = () => {
                     </span>
                     <div>
                       <h4 
-                        className="text-base font-medium leading-snug mb-1.5 transition-all duration-500"
+                        className="text-[0.9375rem] lg:text-base font-medium leading-snug mb-2 transition-all duration-500"
                         style={{
                           color: isCurrent ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                         }}
                       >
-                        {step.title}
+                        {step.header}
                       </h4>
                       <p 
-                        className="text-[0.9375rem] text-muted-foreground/70 leading-[1.7] transition-all duration-700"
+                        className="text-[0.875rem] lg:text-[0.9375rem] text-muted-foreground/70 leading-[1.7] transition-all duration-700"
                         style={{
                           opacity: isCurrent ? 1 : 0,
-                          maxHeight: isCurrent ? '100px' : '0',
+                          maxHeight: isCurrent ? '120px' : '0',
                           overflow: 'hidden',
                         }}
                       >
-                        {step.description}
+                        {step.subtext}
                       </p>
                     </div>
                   </div>
@@ -443,348 +377,182 @@ const ApproachSection = () => {
         </div>
 
         {/* Vertical Divider */}
-        <div className="w-px bg-border/30" />
+        <div className="w-px bg-border/20" />
 
-        {/* Right Side - Multi-Layer System Diagram (60%) */}
-        <div className="w-[60%] relative flex items-center justify-center bg-background overflow-hidden">
-          <svg
-            viewBox="0 0 100 100"
-            className="w-full h-full max-w-[600px] max-h-[600px]"
-            style={{ opacity: 0.92 }}
-          >
-            <defs>
-              {/* Subtle grid pattern */}
-              <pattern id="approachGrid" width="5" height="5" patternUnits="userSpaceOnUse">
-                <path
-                  d="M 5 0 L 0 0 0 5"
-                  fill="none"
-                  stroke="hsl(var(--border))"
-                  strokeWidth="0.05"
-                  strokeOpacity="0.25"
-                />
-              </pattern>
-              
-              {/* Gradient for automation glow */}
-              <linearGradient id="automationGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0" />
-                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            
-            {/* Background grid */}
-            <rect width="100" height="100" fill="url(#approachGrid)" />
-
-            {/* Layer background zones - visible from start, subtle */}
-            {systemLayers.map((layer) => (
-              <g key={layer.id}>
-                <rect
-                  x="6"
-                  y={layer.y - 9}
-                  width="88"
-                  height="18"
-                  rx="3"
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={layer.opacity * (0.5 + step4Progress * 0.5)}
-                  className="transition-all duration-1500"
-                />
-                {/* Layer labels (appear in step 4) */}
-                <text
-                  x="95"
-                  y={layer.y + 0.5}
-                  textAnchor="end"
-                  fontSize="2.2"
-                  fill="hsl(var(--muted-foreground))"
-                  fillOpacity={step4Progress * 0.4}
-                  style={{ fontFamily: 'system-ui, sans-serif', letterSpacing: '0.02em' }}
-                  className="transition-all duration-1000"
-                >
-                  {layer.label}
-                </text>
-              </g>
-            ))}
-
-            {/* STEP 1: Horizontal scan lines (instrumentation) */}
-            {step1Progress > 0 && step1Progress < 1 && (
-              <>
-                <line
-                  x1="5"
-                  y1={scanLinePosition % 100}
-                  x2="95"
-                  y2={scanLinePosition % 100}
-                  stroke="hsl(var(--muted-foreground))"
-                  strokeWidth="0.15"
-                  strokeOpacity={0.3 * (1 - step1Progress)}
-                  className="transition-opacity duration-300"
-                />
-                <line
-                  x1="5"
-                  y1={(scanLinePosition + 33) % 100}
-                  x2="95"
-                  y2={(scanLinePosition + 33) % 100}
-                  stroke="hsl(var(--muted-foreground))"
-                  strokeWidth="0.1"
-                  strokeOpacity={0.2 * (1 - step1Progress)}
-                  className="transition-opacity duration-300"
-                />
-                <line
-                  x1="5"
-                  y1={(scanLinePosition + 66) % 100}
-                  x2="95"
-                  y2={(scanLinePosition + 66) % 100}
-                  stroke="hsl(var(--muted-foreground))"
-                  strokeWidth="0.1"
-                  strokeOpacity={0.15 * (1 - step1Progress)}
-                  className="transition-opacity duration-300"
-                />
-              </>
-            )}
-
-            {/* STEP 2: Ghost trails showing previous paths */}
-            {step2Progress > 0 && systemConnections.map((conn, index) => {
-              const fromNode = getNodeById(conn.from);
-              const toNode = getNodeById(conn.to);
-              if (!fromNode || !toNode) return null;
-              if (conn.type === "repetitive" || conn.type === "cross") return null;
-
-              return (
-                <line
-                  key={`ghost-${index}`}
-                  x1={fromNode.x}
-                  y1={fromNode.y}
-                  x2={toNode.x}
-                  y2={toNode.y}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth="0.15"
-                  strokeOpacity={0.08 * step2Progress * (1 - step2Progress * 0.5)}
-                  strokeDasharray="0.5 0.5"
-                  className="transition-all duration-1500"
-                />
-              );
-            })}
-
-            {/* Main connection lines */}
-            {systemConnections.map((conn, index) => {
-              const fromNode = getNodeById(conn.from);
-              const toNode = getNodeById(conn.to);
-              if (!fromNode || !toNode) return null;
-
-              const { xAdjust, yAdjust } = getPathAdjustment(index);
-              const thickness = getLineThickness(conn, index);
-              const isRepetitive = conn.type === "repetitive";
-              
-              // Opacity logic: repetitive paths fade in step 3
-              let opacity = conn.type === "primary" ? 0.35 
-                : conn.type === "layer" ? 0.25 
-                : conn.type === "cross" ? 0.15 
-                : 0.3;
-              
-              if (isRepetitive && step3Progress > 0.3) {
-                opacity = 0.1 + (1 - step3Progress) * 0.2;
-              }
-
-              return (
-                <line
-                  key={`conn-${index}`}
-                  x1={fromNode.x + xAdjust}
-                  y1={fromNode.y + yAdjust}
-                  x2={toNode.x + xAdjust}
-                  y2={toNode.y + yAdjust}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth={thickness}
-                  strokeOpacity={opacity}
-                  className="transition-all duration-1200"
-                />
-              );
-            })}
-
-            {/* System nodes */}
-            {systemNodes.map((node) => {
-              const isCore = node.id === "core";
-              const baseOpacity = isCore ? 0.55 : 0.35;
-              
-              return (
-                <circle
-                  key={node.id}
-                  cx={node.x}
-                  cy={node.y}
-                  r={node.size}
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={baseOpacity}
-                  className="transition-all duration-800"
-                />
-              );
-            })}
-
-            {/* STEP 1: Constraint markers */}
-            {constraintMarkers.map((marker, index) => (
-              <g
-                key={`constraint-${index}`}
-                style={{
-                  opacity: step1Progress * 0.85,
-                  transition: "opacity 1000ms ease-out",
-                }}
-              >
-                {/* Constraint boundary */}
-                <rect
-                  x={marker.x - marker.width / 2}
-                  y={marker.y - 3.5}
-                  width={marker.width}
-                  height="7"
-                  rx="1.5"
-                  fill="none"
-                  stroke="hsl(var(--muted-foreground))"
-                  strokeWidth="0.18"
-                  strokeOpacity="0.4"
-                  strokeDasharray="1.5 0.8"
-                />
-                {/* Constraint label */}
-                <text
-                  x={marker.x}
-                  y={marker.y + 1}
-                  textAnchor="middle"
-                  fontSize="2.2"
-                  fill="hsl(var(--muted-foreground))"
-                  fillOpacity="0.55"
-                  style={{ fontFamily: 'system-ui, sans-serif' }}
-                >
-                  {marker.label}
-                </text>
-              </g>
-            ))}
-
-            {/* STEP 3: Automation glyphs and energy flow */}
-            {step3Progress > 0.2 && (
-              <>
-                {/* Automation glyph markers */}
-                <circle
-                  cx="40"
-                  cy="48"
-                  r={4 + step3Progress * 2}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="0.12"
-                  strokeOpacity={step3Progress * 0.2}
-                  strokeDasharray="1 0.5"
-                  className="transition-all duration-800"
-                />
-                <circle
-                  cx="60"
-                  cy="46"
-                  r={3.5 + step3Progress * 1.5}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="0.12"
-                  strokeOpacity={step3Progress * 0.2}
-                  strokeDasharray="1 0.5"
-                  className="transition-all duration-800"
-                />
-
-                {/* Energy glow traveling along automated paths */}
-                {step3Progress > 0.4 && step3Progress < 0.9 && (
-                  <>
-                    <circle
-                      cx={42 + (step3Progress - 0.4) * 30}
-                      cy={35 + (step3Progress - 0.4) * 26}
-                      r="1.5"
-                      fill="hsl(var(--primary))"
-                      fillOpacity={(0.9 - step3Progress) * 0.5}
-                      className="transition-all duration-200"
-                    />
-                    <circle
-                      cx={58 + (step3Progress - 0.4) * 10}
-                      cy={35 + (step3Progress - 0.4) * 26}
-                      r="1.2"
-                      fill="hsl(var(--primary))"
-                      fillOpacity={(0.9 - step3Progress) * 0.4}
-                      className="transition-all duration-200"
-                    />
-                  </>
-                )}
-
-                {/* Simplified path indicators */}
-                <path
-                  d={`M 42 26 Q 41 38 40 48`}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="0.3"
-                  strokeOpacity={step3Progress * 0.25}
-                  className="transition-all duration-1000"
-                />
-                <path
-                  d={`M 58 24 Q 59 36 60 46`}
-                  fill="none"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="0.25"
-                  strokeOpacity={step3Progress * 0.2}
-                  className="transition-all duration-1000"
-                />
-              </>
-            )}
-
-            {/* STEP 4: New elements attaching cleanly */}
-            {step4Progress > 0 && (
-              <>
-                {/* New nodes attaching */}
-                <circle
-                  cx="10"
-                  cy="55"
-                  r={1.2 * step4Progress}
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={0.3 * step4Progress}
-                  className="transition-all duration-1200"
-                />
-                <line
-                  x1="18"
-                  y1="44"
-                  x2={10 + 4 * (1 - step4Progress)}
-                  y2={55 - 5 * (1 - step4Progress)}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth="0.2"
-                  strokeOpacity={0.2 * step4Progress}
-                  className="transition-all duration-1200"
-                />
+        {/* Right Side - Layered System Canvas (60%) */}
+        <div className="w-[60%] relative flex items-center justify-center bg-background overflow-hidden p-8 lg:p-12">
+          <div className="w-full max-w-[560px] h-full max-h-[480px] relative">
+            {/* Main canvas container */}
+            <div 
+              className="absolute inset-0 rounded-3xl transition-all duration-1000"
+              style={{
+                background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(260 15% 98.5%) 100%)',
+                boxShadow: step4Progress > 0.5 
+                  ? '0 0 0 1px hsl(var(--border)/0.25)' 
+                  : 'none',
+              }}
+            >
+              {/* Horizontal layers */}
+              {systemLayers.map((layer, index) => {
+                // Layer highlight during step 1 (sequential scan)
+                const layerHighlightDelay = index * 0.18;
+                const layerHighlight = step1Progress > layerHighlightDelay 
+                  ? Math.min(1, (step1Progress - layerHighlightDelay) / 0.25) 
+                  : 0;
                 
-                <circle
-                  cx="90"
-                  cy="60"
-                  r={1 * step4Progress}
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={0.25 * step4Progress}
-                  className="transition-all duration-1200"
-                />
-                <line
-                  x1="82"
-                  y1="42"
-                  x2={90 - 4 * (1 - step4Progress)}
-                  y2={60 - 8 * (1 - step4Progress)}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth="0.18"
-                  strokeOpacity={0.18 * step4Progress}
-                  className="transition-all duration-1200"
-                />
+                // Step 2: Directional flow gradients
+                const gradientIntensity = step2Progress * 0.2;
+                
+                // Step 4: Refined alignment
+                const alignmentAdjust = step4Progress * 1.5;
 
-                <circle
-                  cx="50"
-                  cy="95"
-                  r={1.3 * step4Progress}
-                  fill="hsl(var(--foreground))"
-                  fillOpacity={0.28 * step4Progress}
-                  className="transition-all duration-1200"
+                return (
+                  <div
+                    key={layer.id}
+                    className="absolute left-6 right-6 lg:left-10 lg:right-10 h-[16%] rounded-xl transition-all duration-1000 ease-out"
+                    style={{
+                      top: `${layer.y - 7 + alignmentAdjust * (index % 2 === 0 ? -0.3 : 0.3)}%`,
+                      background: `linear-gradient(90deg, 
+                        hsl(260 25% 96.5% / ${0.5 + layerHighlight * 0.25}) 0%, 
+                        hsl(260 20% 97.5% / ${0.4 + gradientIntensity}) 50%,
+                        hsl(260 25% 96.5% / ${0.5 + layerHighlight * 0.25}) 100%)`,
+                      opacity: 0.6 + step4Progress * 0.25,
+                    }}
+                  >
+                    {/* Layer label */}
+                    <span 
+                      className="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 text-[9px] lg:text-[10px] tracking-wide text-muted-foreground/30 transition-all duration-1000"
+                      style={{
+                        opacity: step4Progress > 0.4 ? 0.7 : 0.35,
+                      }}
+                    >
+                      {layer.label}
+                    </span>
+
+                    {/* Step 2: Flow emphasis paths */}
+                    {step2Progress > 0 && (
+                      <div 
+                        className="absolute inset-y-3 left-[22%] right-[12%] transition-all duration-1000"
+                        style={{ opacity: step2Progress * 0.5 }}
+                      >
+                        {/* Primary flow line */}
+                        <div 
+                          className="h-px w-full absolute top-1/2 -translate-y-1/2"
+                          style={{
+                            background: `linear-gradient(90deg, 
+                              transparent 0%, 
+                              hsl(260 25% 75% / 0.2) ${15 + index * 8}%, 
+                              hsl(260 25% 70% / 0.35) 50%,
+                              hsl(260 25% 75% / 0.2) ${85 - index * 8}%, 
+                              transparent 100%)`,
+                          }}
+                        />
+                        {/* High-frequency path indicator */}
+                        {index === 2 && step2Progress > 0.5 && (
+                          <div 
+                            className="h-[2px] absolute top-1/2 -translate-y-1/2 left-[30%] right-[40%]"
+                            style={{
+                              background: `linear-gradient(90deg, 
+                                transparent 0%, 
+                                hsl(260 30% 65% / ${step2Progress * 0.25}) 30%,
+                                hsl(260 30% 65% / ${step2Progress * 0.25}) 70%, 
+                                transparent 100%)`,
+                              opacity: (step2Progress - 0.5) * 2,
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+
+                    {/* Step 3: Selective automation indicator (only on Workflows) */}
+                    {layer.id === "workflows" && step3Progress > 0.2 && (
+                      <div 
+                        className="absolute right-6 lg:right-10 top-1/2 -translate-y-1/2 flex items-center gap-2 transition-all duration-1000"
+                        style={{ opacity: step3Progress * 0.65 }}
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-foreground/15" />
+                        <div className="w-8 h-px bg-foreground/10" />
+                        <svg 
+                          width="12" 
+                          height="12" 
+                          viewBox="0 0 12 12" 
+                          className="text-foreground/25"
+                          style={{ opacity: step3Progress > 0.5 ? 1 : 0 }}
+                        >
+                          <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                          <path d="M4 6 L5.5 7.5 L8 4.5" fill="none" stroke="currentColor" strokeWidth="0.6" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {/* Step 1: Vertical scan line animation */}
+              {step1Progress > 0 && step1Progress < 1 && (
+                <div 
+                  className="absolute top-6 bottom-6 w-px transition-all duration-75 ease-linear"
+                  style={{
+                    left: `${6 + scanLineX * 0.88}%`,
+                    background: 'linear-gradient(180deg, transparent 0%, hsl(260 35% 75% / 0.35) 15%, hsl(260 35% 75% / 0.35) 85%, transparent 100%)',
+                  }}
                 />
-                <line
-                  x1="50"
-                  y1="85"
-                  x2="50"
-                  y2={95 - 5 * (1 - step4Progress)}
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth="0.2"
-                  strokeOpacity={0.2 * step4Progress}
-                  className="transition-all duration-1200"
+              )}
+
+              {/* Step 1: Edge constraint callouts */}
+              {step1Progress > 0.25 && (
+                <>
+                  <div 
+                    className="absolute -left-4 lg:-left-6 top-[18%] flex items-center gap-2 transition-all duration-1000"
+                    style={{ 
+                      opacity: Math.min(1, (step1Progress - 0.25) / 0.3) * 0.55,
+                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.25) / 0.3)) * -8}px)`,
+                    }}
+                  >
+                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
+                      Regulatory
+                    </span>
+                    <div className="w-3 h-px bg-border/40" />
+                  </div>
+                  <div 
+                    className="absolute -right-4 lg:-right-6 top-[38%] flex items-center gap-2 transition-all duration-1000"
+                    style={{ 
+                      opacity: Math.min(1, (step1Progress - 0.35) / 0.3) * 0.55,
+                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.35) / 0.3)) * 8}px)`,
+                    }}
+                  >
+                    <div className="w-3 h-px bg-border/40" />
+                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
+                      Existing tools
+                    </span>
+                  </div>
+                  <div 
+                    className="absolute -left-4 lg:-left-6 bottom-[28%] flex items-center gap-2 transition-all duration-1000"
+                    style={{ 
+                      opacity: Math.min(1, (step1Progress - 0.45) / 0.3) * 0.55,
+                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.45) / 0.3)) * -8}px)`,
+                    }}
+                  >
+                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
+                      Team ownership
+                    </span>
+                    <div className="w-3 h-px bg-border/40" />
+                  </div>
+                </>
+              )}
+
+              {/* Step 4: Outer stability frame */}
+              {step4Progress > 0.4 && (
+                <div 
+                  className="absolute -inset-3 lg:-inset-4 rounded-[28px] border transition-all duration-1000"
+                  style={{ 
+                    borderColor: `hsl(var(--border) / ${(step4Progress - 0.4) * 0.3})`,
+                    opacity: (step4Progress - 0.4) * 0.8,
+                  }}
                 />
-              </>
-            )}
-          </svg>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>
