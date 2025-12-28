@@ -30,12 +30,12 @@ const approachSteps: ApproachStep[] = [
   },
 ];
 
-// Layer definitions for the system canvas
+// Layer definitions
 const systemLayers = [
-  { id: "compliance", label: "Compliance", y: 20 },
-  { id: "client", label: "Client Context", y: 40 },
-  { id: "workflows", label: "Workflows", y: 60 },
-  { id: "knowledge", label: "Knowledge", y: 80 },
+  { id: "compliance", label: "Compliance" },
+  { id: "client", label: "Client Context" },
+  { id: "workflows", label: "Workflows" },
+  { id: "knowledge", label: "Knowledge" },
 ];
 
 const ApproachSection = () => {
@@ -64,7 +64,6 @@ const ApproachSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Determine which step is active based on scroll progress
   const getActiveStep = () => {
     if (scrollProgress < 0.25) return 0;
     if (scrollProgress < 0.50) return 1;
@@ -74,21 +73,13 @@ const ApproachSection = () => {
 
   const activeStep = getActiveStep();
 
-  // Calculate animation states for each step
   const getStepAnimationState = () => {
-    // Step 1: Observe constraints (0-25%)
     const step1Progress = scrollProgress < 0.05 ? 0 : 
       scrollProgress < 0.25 ? Math.min(1, (scrollProgress - 0.05) / 0.18) : 1;
-
-    // Step 2: Shape around behavior (25-50%)
     const step2Progress = scrollProgress < 0.25 ? 0 :
       scrollProgress < 0.50 ? (scrollProgress - 0.25) / 0.25 : 1;
-
-    // Step 3: Apply automation selectively (50-75%)
     const step3Progress = scrollProgress < 0.50 ? 0 :
       scrollProgress < 0.75 ? (scrollProgress - 0.50) / 0.25 : 1;
-
-    // Step 4: Lock in clarity (75-100%)
     const step4Progress = scrollProgress < 0.75 ? 0 :
       (scrollProgress - 0.75) / 0.25;
 
@@ -100,6 +91,18 @@ const ApproachSection = () => {
   // Scan line position for step 1
   const scanLineX = step1Progress * 100;
 
+  // Get layer state based on scroll
+  const getLayerState = (layerIndex: number) => {
+    // During step 1, layers highlight sequentially
+    const highlightDelay = layerIndex * 0.2;
+    const isHighlighted = step1Progress > highlightDelay && step1Progress < highlightDelay + 0.4;
+    
+    // Active layer for step 3 (only workflows gets automation)
+    const hasAutomation = layerIndex === 2 && step3Progress > 0.3;
+    
+    return { isHighlighted, hasAutomation };
+  };
+
   // Mobile layout
   if (isMobile) {
     return (
@@ -109,135 +112,123 @@ const ApproachSection = () => {
         style={{ height: "400vh" }}
       >
         <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-          {/* Top - Layered System Canvas (45%) */}
+          {/* Top - System Canvas (45%) */}
           <div className="h-[45%] relative flex items-center justify-center bg-background overflow-hidden p-4">
-            <div className="w-full max-w-[320px] h-full max-h-[280px] relative">
-              {/* Main container frame */}
-              <div 
-                className="absolute inset-0 rounded-2xl transition-all duration-1000"
-                style={{
-                  background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(260 20% 98%) 100%)',
-                  boxShadow: step4Progress > 0.5 
-                    ? '0 0 0 1px hsl(var(--border)/0.3)' 
-                    : 'none',
-                }}
-              >
-                {/* Horizontal layers */}
+            {/* Defined canvas container */}
+            <div 
+              className="w-full max-w-[340px] h-full max-h-[260px] rounded-2xl p-5 relative"
+              style={{
+                backgroundColor: '#F6F4FA',
+                border: '1px solid rgba(60, 50, 120, 0.08)',
+              }}
+            >
+              {/* Layer cards */}
+              <div className="h-full flex flex-col justify-between py-2">
                 {systemLayers.map((layer, index) => {
-                  // Layer highlight during step 1 (sequential)
-                  const layerHighlightDelay = index * 0.2;
-                  const layerHighlight = step1Progress > layerHighlightDelay 
-                    ? Math.min(1, (step1Progress - layerHighlightDelay) / 0.3) 
-                    : 0;
+                  const { isHighlighted, hasAutomation } = getLayerState(index);
                   
-                  // Step 2: Directional gradients appear
-                  const gradientOpacity = step2Progress * 0.15;
-                  
-                  // Step 4: Even alignment
-                  const alignmentAdjust = step4Progress * 2;
+                  // Opacity hierarchy
+                  const baseOpacity = isHighlighted ? 1 : 0.7;
+                  const dimmedOpacity = step4Progress > 0 ? 0.85 + step4Progress * 0.15 : baseOpacity;
 
                   return (
                     <div
                       key={layer.id}
-                      className="absolute left-4 right-4 h-[18%] rounded-lg transition-all duration-1000"
+                      className="relative rounded-lg px-4 py-2.5 transition-all duration-700 ease-out"
                       style={{
-                        top: `${layer.y - 8 + alignmentAdjust * (index % 2 === 0 ? -0.5 : 0.5)}%`,
-                        background: `linear-gradient(90deg, 
-                          hsl(260 30% 96% / ${0.4 + layerHighlight * 0.2}) 0%, 
-                          hsl(260 25% 97% / ${0.3 + gradientOpacity}) 50%,
-                          hsl(260 30% 96% / ${0.4 + layerHighlight * 0.2}) 100%)`,
-                        opacity: 0.5 + step4Progress * 0.3,
+                        backgroundColor: isHighlighted ? '#FFFFFF' : 'rgba(255, 255, 255, 0.85)',
+                        boxShadow: isHighlighted 
+                          ? '0 2px 8px rgba(60, 50, 120, 0.08)' 
+                          : '0 1px 3px rgba(60, 50, 120, 0.04)',
+                        opacity: dimmedOpacity,
+                        transform: step4Progress > 0.5 ? 'translateY(0)' : undefined,
                       }}
                     >
                       {/* Layer label */}
                       <span 
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] tracking-wide text-muted-foreground/40 transition-all duration-700"
+                        className="text-[10px] font-medium tracking-wide transition-all duration-500"
                         style={{
-                          opacity: step4Progress > 0.3 ? 0.6 : 0.3,
+                          color: isHighlighted 
+                            ? 'hsl(260 30% 35%)' 
+                            : 'hsl(260 15% 45% / 0.65)',
                         }}
                       >
                         {layer.label}
                       </span>
 
-                      {/* Step 2: Flow paths within layer */}
-                      {step2Progress > 0 && (
+                      {/* Step 2: Flow indicator */}
+                      {step2Progress > 0.3 && index === 2 && (
                         <div 
-                          className="absolute inset-y-2 left-[20%] right-[10%] transition-all duration-1000"
-                          style={{ opacity: step2Progress * 0.4 }}
-                        >
-                          <div 
-                            className="h-px w-full absolute top-1/2 -translate-y-1/2"
-                            style={{
-                              background: `linear-gradient(90deg, 
-                                transparent 0%, 
-                                hsl(260 30% 70% / 0.25) ${20 + index * 10}%, 
-                                hsl(260 30% 70% / 0.4) 50%,
-                                hsl(260 30% 70% / 0.25) ${80 - index * 10}%, 
-                                transparent 100%)`,
-                            }}
-                          />
-                        </div>
+                          className="absolute right-4 top-1/2 -translate-y-1/2 h-px transition-all duration-700"
+                          style={{
+                            width: `${step2Progress * 40}px`,
+                            background: 'linear-gradient(90deg, transparent, hsl(260 25% 70% / 0.4))',
+                            opacity: step2Progress * 0.6,
+                          }}
+                        />
                       )}
 
-                      {/* Step 3: Automation indicator (only on Workflows layer) */}
-                      {layer.id === "workflows" && step3Progress > 0.3 && (
+                      {/* Step 3: Automation indicator */}
+                      {hasAutomation && (
                         <div 
-                          className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-1.5 transition-all duration-700"
-                          style={{ opacity: step3Progress * 0.7 }}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5 transition-all duration-700"
+                          style={{ opacity: (step3Progress - 0.3) * 1.2 }}
                         >
-                          <div className="w-1 h-1 rounded-full bg-foreground/20" />
-                          <div className="w-6 h-px bg-foreground/15" />
-                          <div className="w-1 h-1 rounded-full bg-foreground/30" />
+                          <div 
+                            className="w-1.5 h-1.5 rounded-full"
+                            style={{ backgroundColor: 'hsl(260 35% 55%)' }}
+                          />
                         </div>
                       )}
                     </div>
                   );
                 })}
-
-                {/* Step 1: Vertical scan line */}
-                {step1Progress > 0 && step1Progress < 1 && (
-                  <div 
-                    className="absolute top-4 bottom-4 w-px transition-all duration-100"
-                    style={{
-                      left: `${4 + scanLineX * 0.92}%`,
-                      background: 'linear-gradient(180deg, transparent 0%, hsl(260 40% 70% / 0.3) 20%, hsl(260 40% 70% / 0.3) 80%, transparent 100%)',
-                      opacity: 0.6,
-                    }}
-                  />
-                )}
-
-                {/* Step 1: Constraint callouts */}
-                {step1Progress > 0.3 && (
-                  <>
-                    <div 
-                      className="absolute -left-2 top-[15%] text-[7px] text-muted-foreground/50 transition-all duration-700"
-                      style={{ opacity: step1Progress * 0.6 }}
-                    >
-                      Regulatory
-                    </div>
-                    <div 
-                      className="absolute -right-2 top-[35%] text-[7px] text-muted-foreground/50 text-right transition-all duration-700"
-                      style={{ opacity: step1Progress * 0.6 }}
-                    >
-                      Existing tools
-                    </div>
-                    <div 
-                      className="absolute -left-2 bottom-[25%] text-[7px] text-muted-foreground/50 transition-all duration-700"
-                      style={{ opacity: step1Progress * 0.6 }}
-                    >
-                      Team ownership
-                    </div>
-                  </>
-                )}
-
-                {/* Step 4: Outer stability frame */}
-                {step4Progress > 0.5 && (
-                  <div 
-                    className="absolute -inset-2 rounded-3xl border border-border/20 transition-all duration-1000"
-                    style={{ opacity: (step4Progress - 0.5) * 0.6 }}
-                  />
-                )}
               </div>
+
+              {/* Step 1: Scan line */}
+              {step1Progress > 0 && step1Progress < 1 && (
+                <div 
+                  className="absolute top-5 bottom-5 w-px transition-all duration-100"
+                  style={{
+                    left: `${5 + scanLineX * 0.9}%`,
+                    background: 'linear-gradient(180deg, transparent 0%, hsl(260 40% 65% / 0.5) 20%, hsl(260 40% 65% / 0.5) 80%, transparent 100%)',
+                  }}
+                />
+              )}
+
+              {/* Step 1: Constraint callouts */}
+              {step1Progress > 0.3 && (
+                <>
+                  <div 
+                    className="absolute -right-2 top-[20%] text-[8px] text-muted-foreground/50 transition-all duration-700"
+                    style={{ opacity: (step1Progress - 0.3) * 0.8 }}
+                  >
+                    Regulatory
+                  </div>
+                  <div 
+                    className="absolute -right-2 top-[50%] text-[8px] text-muted-foreground/50 transition-all duration-700"
+                    style={{ opacity: (step1Progress - 0.4) * 0.8 }}
+                  >
+                    Existing tools
+                  </div>
+                  <div 
+                    className="absolute -right-2 bottom-[20%] text-[8px] text-muted-foreground/50 transition-all duration-700"
+                    style={{ opacity: (step1Progress - 0.5) * 0.8 }}
+                  >
+                    Team ownership
+                  </div>
+                </>
+              )}
+
+              {/* Step 4: Outer stability frame */}
+              {step4Progress > 0.5 && (
+                <div 
+                  className="absolute -inset-2 rounded-3xl border transition-all duration-1000"
+                  style={{ 
+                    borderColor: `rgba(60, 50, 120, ${(step4Progress - 0.5) * 0.12})`,
+                  }}
+                />
+              )}
             </div>
           </div>
 
@@ -379,179 +370,146 @@ const ApproachSection = () => {
         {/* Vertical Divider */}
         <div className="w-px bg-border/20" />
 
-        {/* Right Side - Layered System Canvas (60%) */}
+        {/* Right Side - System Canvas (60%) */}
         <div className="w-[60%] relative flex items-center justify-center bg-background overflow-hidden p-8 lg:p-12">
-          <div className="w-full max-w-[560px] h-full max-h-[480px] relative">
-            {/* Main canvas container */}
-            <div 
-              className="absolute inset-0 rounded-3xl transition-all duration-1000"
-              style={{
-                background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(260 15% 98.5%) 100%)',
-                boxShadow: step4Progress > 0.5 
-                  ? '0 0 0 1px hsl(var(--border)/0.25)' 
-                  : 'none',
-              }}
-            >
-              {/* Horizontal layers */}
+          {/* Defined canvas container */}
+          <div 
+            className="w-full max-w-[520px] h-auto rounded-3xl p-8 lg:p-10 relative"
+            style={{
+              backgroundColor: '#F6F4FA',
+              border: '1px solid rgba(60, 50, 120, 0.08)',
+            }}
+          >
+            {/* Layer cards container */}
+            <div className="flex flex-col gap-4">
               {systemLayers.map((layer, index) => {
-                // Layer highlight during step 1 (sequential scan)
-                const layerHighlightDelay = index * 0.18;
-                const layerHighlight = step1Progress > layerHighlightDelay 
-                  ? Math.min(1, (step1Progress - layerHighlightDelay) / 0.25) 
-                  : 0;
+                const { isHighlighted, hasAutomation } = getLayerState(index);
                 
-                // Step 2: Directional flow gradients
-                const gradientIntensity = step2Progress * 0.2;
-                
-                // Step 4: Refined alignment
-                const alignmentAdjust = step4Progress * 1.5;
+                // Clear opacity hierarchy
+                const baseOpacity = isHighlighted ? 1 : 0.75;
+                const finalOpacity = step4Progress > 0.5 ? 1 : baseOpacity;
 
                 return (
                   <div
                     key={layer.id}
-                    className="absolute left-6 right-6 lg:left-10 lg:right-10 h-[16%] rounded-xl transition-all duration-1000 ease-out"
+                    className="relative rounded-xl px-6 py-4 transition-all duration-700 ease-out"
                     style={{
-                      top: `${layer.y - 7 + alignmentAdjust * (index % 2 === 0 ? -0.3 : 0.3)}%`,
-                      background: `linear-gradient(90deg, 
-                        hsl(260 25% 96.5% / ${0.5 + layerHighlight * 0.25}) 0%, 
-                        hsl(260 20% 97.5% / ${0.4 + gradientIntensity}) 50%,
-                        hsl(260 25% 96.5% / ${0.5 + layerHighlight * 0.25}) 100%)`,
-                      opacity: 0.6 + step4Progress * 0.25,
+                      backgroundColor: isHighlighted ? '#FFFFFF' : 'rgba(255, 255, 255, 0.9)',
+                      boxShadow: isHighlighted 
+                        ? '0 4px 16px rgba(60, 50, 120, 0.1)' 
+                        : '0 1px 4px rgba(60, 50, 120, 0.05)',
+                      opacity: finalOpacity,
                     }}
                   >
                     {/* Layer label */}
                     <span 
-                      className="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 text-[9px] lg:text-[10px] tracking-wide text-muted-foreground/30 transition-all duration-1000"
+                      className="text-[11px] lg:text-[12px] font-medium tracking-wide transition-all duration-500"
                       style={{
-                        opacity: step4Progress > 0.4 ? 0.7 : 0.35,
+                        color: isHighlighted 
+                          ? 'hsl(260 30% 30%)' 
+                          : 'hsl(260 15% 40% / 0.7)',
                       }}
                     >
                       {layer.label}
                     </span>
 
-                    {/* Step 2: Flow emphasis paths */}
-                    {step2Progress > 0 && (
+                    {/* Step 2: Flow gradient indicator */}
+                    {step2Progress > 0.2 && (
                       <div 
-                        className="absolute inset-y-3 left-[22%] right-[12%] transition-all duration-1000"
-                        style={{ opacity: step2Progress * 0.5 }}
-                      >
-                        {/* Primary flow line */}
-                        <div 
-                          className="h-px w-full absolute top-1/2 -translate-y-1/2"
-                          style={{
-                            background: `linear-gradient(90deg, 
-                              transparent 0%, 
-                              hsl(260 25% 75% / 0.2) ${15 + index * 8}%, 
-                              hsl(260 25% 70% / 0.35) 50%,
-                              hsl(260 25% 75% / 0.2) ${85 - index * 8}%, 
-                              transparent 100%)`,
-                          }}
-                        />
-                        {/* High-frequency path indicator */}
-                        {index === 2 && step2Progress > 0.5 && (
-                          <div 
-                            className="h-[2px] absolute top-1/2 -translate-y-1/2 left-[30%] right-[40%]"
-                            style={{
-                              background: `linear-gradient(90deg, 
-                                transparent 0%, 
-                                hsl(260 30% 65% / ${step2Progress * 0.25}) 30%,
-                                hsl(260 30% 65% / ${step2Progress * 0.25}) 70%, 
-                                transparent 100%)`,
-                              opacity: (step2Progress - 0.5) * 2,
-                            }}
-                          />
-                        )}
-                      </div>
+                        className="absolute right-6 top-1/2 -translate-y-1/2 h-px transition-all duration-1000"
+                        style={{
+                          width: index === 2 ? `${step2Progress * 80}px` : `${step2Progress * 50}px`,
+                          background: index === 2 
+                            ? 'linear-gradient(90deg, transparent, hsl(260 30% 60% / 0.5))' 
+                            : 'linear-gradient(90deg, transparent, hsl(260 20% 70% / 0.3))',
+                          opacity: step2Progress * 0.7,
+                        }}
+                      />
                     )}
 
-                    {/* Step 3: Selective automation indicator (only on Workflows) */}
-                    {layer.id === "workflows" && step3Progress > 0.2 && (
+                    {/* Step 3: Automation indicator (only on Workflows) */}
+                    {hasAutomation && (
                       <div 
-                        className="absolute right-6 lg:right-10 top-1/2 -translate-y-1/2 flex items-center gap-2 transition-all duration-1000"
-                        style={{ opacity: step3Progress * 0.65 }}
+                        className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2 transition-all duration-700"
+                        style={{ opacity: (step3Progress - 0.3) * 1.4 }}
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground/15" />
                         <div className="w-8 h-px bg-foreground/10" />
-                        <svg 
-                          width="12" 
-                          height="12" 
-                          viewBox="0 0 12 12" 
-                          className="text-foreground/25"
-                          style={{ opacity: step3Progress > 0.5 ? 1 : 0 }}
-                        >
-                          <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                          <path d="M4 6 L5.5 7.5 L8 4.5" fill="none" stroke="currentColor" strokeWidth="0.6" />
-                        </svg>
+                        <div 
+                          className="w-2 h-2 rounded-full transition-all duration-500"
+                          style={{ 
+                            backgroundColor: 'hsl(260 40% 50%)',
+                            boxShadow: step3Progress > 0.6 ? '0 0 8px hsl(260 40% 50% / 0.4)' : 'none',
+                          }}
+                        />
                       </div>
                     )}
                   </div>
                 );
               })}
-
-              {/* Step 1: Vertical scan line animation */}
-              {step1Progress > 0 && step1Progress < 1 && (
-                <div 
-                  className="absolute top-6 bottom-6 w-px transition-all duration-75 ease-linear"
-                  style={{
-                    left: `${6 + scanLineX * 0.88}%`,
-                    background: 'linear-gradient(180deg, transparent 0%, hsl(260 35% 75% / 0.35) 15%, hsl(260 35% 75% / 0.35) 85%, transparent 100%)',
-                  }}
-                />
-              )}
-
-              {/* Step 1: Edge constraint callouts */}
-              {step1Progress > 0.25 && (
-                <>
-                  <div 
-                    className="absolute -left-4 lg:-left-6 top-[18%] flex items-center gap-2 transition-all duration-1000"
-                    style={{ 
-                      opacity: Math.min(1, (step1Progress - 0.25) / 0.3) * 0.55,
-                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.25) / 0.3)) * -8}px)`,
-                    }}
-                  >
-                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
-                      Regulatory
-                    </span>
-                    <div className="w-3 h-px bg-border/40" />
-                  </div>
-                  <div 
-                    className="absolute -right-4 lg:-right-6 top-[38%] flex items-center gap-2 transition-all duration-1000"
-                    style={{ 
-                      opacity: Math.min(1, (step1Progress - 0.35) / 0.3) * 0.55,
-                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.35) / 0.3)) * 8}px)`,
-                    }}
-                  >
-                    <div className="w-3 h-px bg-border/40" />
-                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
-                      Existing tools
-                    </span>
-                  </div>
-                  <div 
-                    className="absolute -left-4 lg:-left-6 bottom-[28%] flex items-center gap-2 transition-all duration-1000"
-                    style={{ 
-                      opacity: Math.min(1, (step1Progress - 0.45) / 0.3) * 0.55,
-                      transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.45) / 0.3)) * -8}px)`,
-                    }}
-                  >
-                    <span className="text-[9px] lg:text-[10px] text-muted-foreground/60 tracking-wide">
-                      Team ownership
-                    </span>
-                    <div className="w-3 h-px bg-border/40" />
-                  </div>
-                </>
-              )}
-
-              {/* Step 4: Outer stability frame */}
-              {step4Progress > 0.4 && (
-                <div 
-                  className="absolute -inset-3 lg:-inset-4 rounded-[28px] border transition-all duration-1000"
-                  style={{ 
-                    borderColor: `hsl(var(--border) / ${(step4Progress - 0.4) * 0.3})`,
-                    opacity: (step4Progress - 0.4) * 0.8,
-                  }}
-                />
-              )}
             </div>
+
+            {/* Step 1: Vertical scan line */}
+            {step1Progress > 0 && step1Progress < 1 && (
+              <div 
+                className="absolute top-8 bottom-8 w-px transition-all duration-100 ease-linear"
+                style={{
+                  left: `${8 + scanLineX * 0.84}%`,
+                  background: 'linear-gradient(180deg, transparent 0%, hsl(260 45% 60% / 0.6) 20%, hsl(260 45% 60% / 0.6) 80%, transparent 100%)',
+                }}
+              />
+            )}
+
+            {/* Step 1: Constraint callouts - positioned outside canvas */}
+            {step1Progress > 0.25 && (
+              <>
+                <div 
+                  className="absolute -right-4 lg:-right-8 top-[15%] flex items-center gap-2 transition-all duration-1000"
+                  style={{ 
+                    opacity: Math.min(1, (step1Progress - 0.25) / 0.25) * 0.7,
+                    transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.25) / 0.25)) * 10}px)`,
+                  }}
+                >
+                  <div className="w-4 h-px bg-border/50" />
+                  <span className="text-[10px] lg:text-[11px] text-muted-foreground/60 tracking-wide whitespace-nowrap">
+                    Regulatory
+                  </span>
+                </div>
+                <div 
+                  className="absolute -right-4 lg:-right-8 top-[45%] flex items-center gap-2 transition-all duration-1000"
+                  style={{ 
+                    opacity: Math.min(1, (step1Progress - 0.35) / 0.25) * 0.7,
+                    transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.35) / 0.25)) * 10}px)`,
+                  }}
+                >
+                  <div className="w-4 h-px bg-border/50" />
+                  <span className="text-[10px] lg:text-[11px] text-muted-foreground/60 tracking-wide whitespace-nowrap">
+                    Existing tools
+                  </span>
+                </div>
+                <div 
+                  className="absolute -right-4 lg:-right-8 bottom-[20%] flex items-center gap-2 transition-all duration-1000"
+                  style={{ 
+                    opacity: Math.min(1, (step1Progress - 0.45) / 0.25) * 0.7,
+                    transform: `translateX(${(1 - Math.min(1, (step1Progress - 0.45) / 0.25)) * 10}px)`,
+                  }}
+                >
+                  <div className="w-4 h-px bg-border/50" />
+                  <span className="text-[10px] lg:text-[11px] text-muted-foreground/60 tracking-wide whitespace-nowrap">
+                    Team ownership
+                  </span>
+                </div>
+              </>
+            )}
+
+            {/* Step 4: Outer stability frame */}
+            {step4Progress > 0.4 && (
+              <div 
+                className="absolute -inset-3 lg:-inset-4 rounded-[32px] border transition-all duration-1000"
+                style={{ 
+                  borderColor: `rgba(60, 50, 120, ${(step4Progress - 0.4) * 0.15})`,
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
